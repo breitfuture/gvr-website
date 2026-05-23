@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Golden Valley Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      transition: border-color .2s;
+    }
+    .upload-zone:hover { border-color: var(--gold); }
+    .upload-zone p { color: var(--muted); font-size: .875rem; }
+    .upload-zone strong { color: var(--gold); }
+    .last-updated {
+      font-size: .75rem; color: var(--muted);
+      margin-bottom: 1rem; text-align: right;
+    }
+    .port-summary {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .port-sum-card {
+      background: var(--navy-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem;
+    }
+    .port-sum-label { font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+    .port-sum-value { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; }
+    #file-input { display: none; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <svg class="nav-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 3 L54 15 L54 38 Q54 52 30 58 Q6 52 6 38 L6 15 Z" fill="#0d1117" stroke="#c9a84c" stroke-width="1.5"/>
+        <path d="M30 7 L50 17.5 L50 37 Q50 49 30 54 Q10 49 10 37 L10 17.5 Z" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+        <text x="30" y="32" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#c9a84c" text-anchor="middle">GV9</text>
+        <polyline points="16,40 22,33 27,37 34,27 40,30 46,22" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+      </svg>
+      <span class="nav-name">Golden Valley Research</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="performance.html">Performance</a></li>
+      <li><a href="portfolio.html" class="active">Portfolio</a></li>
+      <li><a href="thesis.html">Thesis</a></li>
+      <li><a href="newsletter.html">Newsletter</a></li>
+      <li><a href="disclosures.html" class="nav-disclosures">Disclosures</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+  </nav>
+
+  <div class="page-header">
+    <h1>Portfolio</h1>
+    <p>Roth IRA · Current open positions</p>
+  </div>
+
+  <div class="page-content">
+
+    <div class="upload-zone" onclick="document.getElementById('file-input').click()">
+      <input type="file" id="file-input" accept=".csv,.xlsx" onchange="handleUpload(event)" />
+      <strong>Upload Fidelity Export</strong>
+      <p>Click to upload your daily Fidelity CSV or Excel positions export</p>
+    </div>
+
+    <div class="port-summary">
+      <div class="port-sum-card">
+        <div class="port-sum-label">Total Value</div>
+        <div class="port-sum-value" id="sum-value">—</div>
+      </div>
+      <div class="port-sum-card">
+        <div class="port-sum-label">Total Gain/Loss</div>
+        <div class="port-sum-value" id="sum-gl">—</div>
+      </div>
+      <div class="port-sum-card">
+        <div class="port-sum-label">Today's Change</div>
+        <div class="port-sum-value" id="sum-today">—</div>
+      </div>
+      <div class="port-sum-card">
+        <div class="port-sum-label">Positions</div>
+        <div class="port-sum-value" id="sum-count">—</div>
+      </div>
+    </div>
+
+    <p class="last-updated" id="last-updated"></p>
+
+    <div class="port-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Qty</th>
+            <th>Last Price</th>
+            <th>Avg Cost</th>
+            <th>Current Value</th>
+            <th>Total Gain $</th>
+            <th>Total Gain %</th>
+            <th>% of Account</th>
+          </tr>
+        </thead>
+        <tbody id="portfolio-tbody">
+          <tr><td colspan="9" style="text-align:center;color:var(--muted);padding:3rem;">Upload a Fidelity export to populate this table</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="disclosure-banner">
+    <strong>Disclosure:</strong> Portfolio data is uploaded manually from Fidelity and may not reflect real-time prices. This is not investment advice. <a href="disclosures.html">Full disclosures →</a>
+  </div>
+
+  <footer class="footer">
+    <span>© 2026 Golden Valley Research</span>
+    <a href="disclosures.html">Disclosures</a>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script>
+    function handleUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      Papa.parse(file, {
+        header: true, skipEmptyLines: true,
+        complete: results => renderPortfolio(results.data, file.name)
+      });
+    }
+
+    function cleanNum(val) {
+      if (!val) return null;
+      const s = String(val).replace(/[$,%\s]/g,'').replace(/[()]/g,m => m==='('?'-':'');
+      return parseFloat(s) || null;
+    }
+
+    function renderPortfolio(rows, filename) {
+      const tbody = document.getElementById('portfolio-tbody');
+      let html = '';
+      let totalValue = 0, totalGL = 0, totalToday = 0;
+
+      rows.forEach(row => {
+        const keys = Object.keys(row);
+        const get = (...names) => {
+          for (const n of names) {
+            const k = keys.find(k => k.toLowerCase().includes(n.toLowerCase()));
+            if (k) return row[k];
+          }
+          return '';
+        };
+
+        const symbol = get('symbol','ticker') || '';
+        if (!symbol || symbol === 'Account' || symbol === 'Pending') return;
+
+        const name = get('description','name','security') || '';
+        const qty = cleanNum(get('quantity','shares','qty'));
+        const price = cleanNum(get('last price','current price','price'));
+        const cost = cleanNum(get('average cost','avg cost','cost basis per'));
+        const value = cleanNum(get('current value','market value','value'));
+        const glDollar = cleanNum(get('total gain/loss $','gain/loss $','total gain'));
+        const glPct = cleanNum(get('total gain/loss %','gain/loss %','total gain/loss pct'));
+        const todayDollar = cleanNum(get("today's gain/loss $","today's change"));
+        const pctAcct = cleanNum(get('% of account','% account','weight'));
+
+        if (value) totalValue += value;
+        if (glDollar) totalGL += glDollar;
+        if (todayDollar) totalToday += todayDollar;
+
+        const glClass = glDollar >= 0 ? 'pos' : 'neg';
+        const todayClass = todayDollar >= 0 ? 'pos' : 'neg';
+
+        html += `<tr>
+          <td class="ticker-cell">${symbol}</td>
+          <td class="name-cell">${name.substring(0,30)}</td>
+          <td>${qty ?? '—'}</td>
+          <td>${price ? '$'+price.toFixed(2) : '—'}</td>
+          <td>${cost ? '$'+cost.toFixed(2) : '—'}</td>
+          <td>${value ? '$'+value.toLocaleString('en-US',{minimumFractionDigits:2}) : '—'}</td>
+          <td class="${glClass}">${glDollar ? (glDollar>=0?'+':'')+' $'+Math.abs(glDollar).toFixed(2) : '—'}</td>
+          <td class="${glClass}">${glPct ? (glPct>=0?'+':'')+glPct.toFixed(2)+'%' : '—'}</td>
+          <td>${pctAcct ? pctAcct.toFixed(2)+'%' : '—'}</td>
+        </tr>`;
+      });
+
+      tbody.innerHTML = html || '<tr><td colspan="9" style="text-align:center;color:var(--muted)">No positions found in file</td></tr>';
+
+      document.getElementById('sum-value').textContent =
+        totalValue ? '$'+totalValue.toLocaleString('en-US',{minimumFractionDigits:2}) : '—';
+      const glEl = document.getElementById('sum-gl');
+      glEl.innerHTML = totalGL
+        ? `<span class="${totalGL>=0?'pos':'neg'}">${totalGL>=0?'+':''} $${Math.abs(totalGL).toLocaleString('en-US',{minimumFractionDigits:2})}</span>`
+        : '—';
+      const todayEl = document.getElementById('sum-today');
+      todayEl.innerHTML = totalToday
+        ? `<span class="${totalToday>=0?'pos':'neg'}">${totalToday>=0?'+':''} $${Math.abs(totalToday).toFixed(2)}</span>`
+        : '—';
+      document.getElementById('sum-count').textContent =
+        rows.filter(r => r[Object.keys(r)[0]] && !['Account','Pending'].includes(r[Object.keys(r)[0]])).length;
+
+      document.getElementById('last-updated').textContent =
+        `Last updated: ${new Date().toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'})} from ${filename}`;
+
+      localStorage.setItem('gvr_portfolio', JSON.stringify({
+        rows, filename, timestamp: new Date().toISOString()
+      }));
+    }
+
+    window.addEventListener('load', () => {
+      const saved = localStorage.getItem('gvr_portfolio');
+      if (saved) {
+        const { rows, filename, timestamp } = JSON.parse(saved);
+        renderPortfolio(rows, filename);
+        document.getElementById('last-updated').textContent =
+          `Last updated: ${new Date(timestamp).toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'})} from ${filename}`;
+      }
+    });
+  </script>
+</body>
+</html>

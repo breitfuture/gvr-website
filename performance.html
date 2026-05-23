@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Performance — Golden Valley Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <svg class="nav-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 3 L54 15 L54 38 Q54 52 30 58 Q6 52 6 38 L6 15 Z" fill="#0d1117" stroke="#c9a84c" stroke-width="1.5"/>
+        <path d="M30 7 L50 17.5 L50 37 Q50 49 30 54 Q10 49 10 37 L10 17.5 Z" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+        <text x="30" y="32" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#c9a84c" text-anchor="middle">GV9</text>
+        <polyline points="16,40 22,33 27,37 34,27 40,30 46,22" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+      </svg>
+      <span class="nav-name">Golden Valley Research</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="performance.html" class="active">Performance</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="thesis.html">Thesis</a></li>
+      <li><a href="newsletter.html">Newsletter</a></li>
+      <li><a href="disclosures.html" class="nav-disclosures">Disclosures</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+  </nav>
+
+  <div class="page-header">
+    <h1>Performance</h1>
+    <p>Roth IRA · Inception Sept 18, 2025 · Investment returns only, transfers excluded</p>
+  </div>
+
+  <div class="page-content">
+
+    <div class="perf-stats-grid" id="stats-grid">
+      <div class="perf-stat">
+        <div class="perf-stat-label">Balance</div>
+        <div class="perf-stat-value" id="s-balance">—</div>
+      </div>
+      <div class="perf-stat">
+        <div class="perf-stat-label">Today</div>
+        <div class="perf-stat-value" id="s-1d">—</div>
+      </div>
+      <div class="perf-stat">
+        <div class="perf-stat-label">1 Week</div>
+        <div class="perf-stat-value" id="s-1w">—</div>
+      </div>
+      <div class="perf-stat">
+        <div class="perf-stat-label">1 Month</div>
+        <div class="perf-stat-value" id="s-1m">—</div>
+      </div>
+      <div class="perf-stat">
+        <div class="perf-stat-label">3 Month</div>
+        <div class="perf-stat-value" id="s-3m">—</div>
+      </div>
+      <div class="perf-stat">
+        <div class="perf-stat-label">6 Month</div>
+        <div class="perf-stat-value" id="s-6m">—</div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-header">
+        <div class="chart-title">Portfolio Growth</div>
+        <div class="chart-toggle">
+          <button class="chart-btn active" onclick="setRange('all', this)">All</button>
+          <button class="chart-btn" onclick="setRange('6m', this)">6M</button>
+          <button class="chart-btn" onclick="setRange('3m', this)">3M</button>
+          <button class="chart-btn" onclick="setRange('1m', this)">1M</button>
+        </div>
+      </div>
+      <canvas id="perfChart" height="320"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-header">
+        <div class="chart-title">Daily Log</div>
+      </div>
+      <div class="port-table-wrap" style="border:none;">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left">Date</th>
+              <th>Balance</th>
+              <th>$ Change</th>
+              <th>% Change</th>
+            </tr>
+          </thead>
+          <tbody id="daily-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="disclosure-banner">
+    <strong>Disclosure:</strong> Performance reflects investment returns only. Cash transfers (deposits) are excluded from return calculations. Past performance does not guarantee future results. This is not investment advice. <a href="disclosures.html">Full disclosures →</a>
+  </div>
+
+  <footer class="footer">
+    <span>© 2026 Golden Valley Research</span>
+    <a href="disclosures.html">Disclosures</a>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    let allData = [];
+    let chart;
+
+    const fmtDollar = v => {
+      if (v === null || v === undefined) return '—';
+      const abs = Math.abs(v).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+      return v >= 0 ? `+$${abs}` : `-$${abs}`;
+    };
+    const fmtPct = v => {
+      if (v === null || v === undefined) return '—';
+      return (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
+    };
+    const colorClass = v => v === null ? '' : (v >= 0 ? 'pos' : 'neg');
+
+    function calcPct(data, lookback) {
+      if (data.length < 2) return null;
+      const end = data[data.length - 1];
+      const start = data[Math.max(0, data.length - 1 - lookback)];
+      return (end.balance - start.balance) / start.balance * 100;
+    }
+
+    function buildChart(data) {
+      const labels = data.map(d => d.date);
+      const values = data.map(d => d.balance);
+      const ctx = document.getElementById('perfChart').getContext('2d');
+
+      if (chart) chart.destroy();
+
+      const grad = ctx.createLinearGradient(0, 0, 0, 320);
+      grad.addColorStop(0, 'rgba(201,168,76,0.25)');
+      grad.addColorStop(1, 'rgba(201,168,76,0.0)');
+
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'GVR Portfolio',
+            data: values,
+            borderColor: '#c9a84c',
+            backgroundColor: grad,
+            borderWidth: 2,
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            pointHoverBackgroundColor: '#c9a84c',
+            fill: true,
+            tension: 0.3,
+          }]
+        },
+        options: {
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#0d1524',
+              borderColor: '#c9a84c',
+              borderWidth: 1,
+              titleColor: '#c9a84c',
+              bodyColor: '#f4f1ea',
+              callbacks: {
+                label: ctx => ' $' + ctx.parsed.y.toLocaleString('en-US', {minimumFractionDigits:2})
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255,255,255,0.04)' },
+              ticks: {
+                color: '#8a94a8', font: { size: 11 },
+                maxTicksLimit: 8,
+                maxRotation: 0,
+              }
+            },
+            y: {
+              grid: { color: 'rgba(255,255,255,0.04)' },
+              ticks: {
+                color: '#8a94a8', font: { size: 11 },
+                callback: v => '$' + v.toLocaleString('en-US')
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function setRange(range, btn) {
+      document.querySelectorAll('.chart-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      let slice;
+      if (range === 'all') slice = allData;
+      else if (range === '6m') slice = allData.slice(-130);
+      else if (range === '3m') slice = allData.slice(-65);
+      else if (range === '1m') slice = allData.slice(-22);
+      buildChart(slice);
+    }
+
+    function buildTable(data) {
+      const tbody = document.getElementById('daily-table-body');
+      const rows = [...data].reverse().slice(0, 60);
+      tbody.innerHTML = rows.map(d => `
+        <tr>
+          <td>${d.date}</td>
+          <td>$${d.balance.toLocaleString('en-US', {minimumFractionDigits:2})}</td>
+          <td class="${colorClass(d.dollar_change)}">${fmtDollar(d.dollar_change)}</td>
+          <td class="${colorClass(d.pct_change)}">${fmtPct(d.pct_change)}</td>
+        </tr>
+      `).join('');
+    }
+
+    fetch('data/performance.json')
+      .then(r => r.json())
+      .then(data => {
+        allData = data;
+        const last = data[data.length - 1];
+
+        document.getElementById('s-balance').innerHTML =
+          `$${last.balance.toLocaleString('en-US', {minimumFractionDigits:2})}`;
+
+        const stats = [
+          ['s-1d', last.pct_change],
+          ['s-1w', calcPct(data, 5)],
+          ['s-1m', calcPct(data, 21)],
+          ['s-3m', calcPct(data, 63)],
+          ['s-6m', calcPct(data, 126)],
+        ];
+        stats.forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (val !== null) {
+            el.innerHTML = `<span class="${colorClass(val)}">${fmtPct(val)}</span>`;
+          }
+        });
+
+        buildChart(data);
+        buildTable(data);
+      });
+  </script>
+</body>
+</html>

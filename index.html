@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Golden Valley Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <svg class="nav-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 3 L54 15 L54 38 Q54 52 30 58 Q6 52 6 38 L6 15 Z" fill="#0d1117" stroke="#c9a84c" stroke-width="1.5"/>
+        <path d="M30 7 L50 17.5 L50 37 Q50 49 30 54 Q10 49 10 37 L10 17.5 Z" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+        <text x="30" y="32" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#c9a84c" text-anchor="middle">GV9</text>
+        <polyline points="16,40 22,33 27,37 34,27 40,30 46,22" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+      </svg>
+      <span class="nav-name">Golden Valley Research</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="performance.html">Performance</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="thesis.html">Thesis</a></li>
+      <li><a href="newsletter.html">Newsletter</a></li>
+      <li><a href="disclosures.html" class="nav-disclosures">Disclosures</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Independent Research · Personal Portfolio</div>
+      <h1 class="hero-title">Generating Alpha<br><em>Through Analysis</em></h1>
+      <p class="hero-sub">A transparent research journal documenting the build of a systematic stock scoring framework, portfolio decision-making, and continuous process refinement in pursuit of disciplined, risk-aware alpha.</p>
+      <div class="hero-cta">
+        <a href="performance.html" class="btn-primary">View Performance</a>
+        <a href="newsletter.html" class="btn-ghost">Latest Research</a>
+      </div>
+    </div>
+    <div class="hero-stat-bar">
+      <div class="stat-item" id="stat-balance">
+        <div class="stat-label">Current Balance</div>
+        <div class="stat-value" id="val-balance">—</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-label">Since Inception</div>
+        <div class="stat-value" id="val-inception">—</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-label">1 Month</div>
+        <div class="stat-value" id="val-1m">—</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-label">1 Week</div>
+        <div class="stat-value" id="val-1w">—</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-label">Today</div>
+        <div class="stat-value" id="val-1d">—</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT STRIP -->
+  <section class="about-strip">
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-icon">⚙</div>
+        <h3>GVR Scoring System</h3>
+        <p>A quantitative framework scoring stocks across Valuation, Growth, Profitability, and Revisions — each weighted 25% for a composite GVR score from 0–100.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">📊</div>
+        <h3>Full Transparency</h3>
+        <p>Every position, every decision, every result — documented publicly. No hindsight bias. No cherry-picking. Real trades, real P&L, real methodology.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">🔬</div>
+        <h3>Research First</h3>
+        <p>Positions are built on fundamental analysis cross-referenced against GVR scores. The system evolves continuously as new data and edge cases emerge.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCLOSURE BANNER -->
+  <div class="disclosure-banner">
+    <strong>Important Disclosure:</strong> Golden Valley Research is an independent research project for educational and informational purposes only. Nothing on this site constitutes investment advice, a solicitation, or a recommendation to buy or sell any security. All investments involve risk. Past performance does not guarantee future results. The author may hold positions in securities discussed. <a href="disclosures.html">Read full disclosures →</a>
+  </div>
+
+  <footer class="footer">
+    <span>© 2026 Golden Valley Research. All rights reserved.</span>
+    <a href="disclosures.html">Disclosures</a>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    fetch('data/performance.json')
+      .then(r => r.json())
+      .then(data => {
+        if (!data.length) return;
+        const last = data[data.length - 1];
+        const first = data[0];
+
+        const fmtPct = v => v >= 0
+          ? `<span class="pos">+${v.toFixed(2)}%</span>`
+          : `<span class="neg">${v.toFixed(2)}%</span>`;
+
+        document.getElementById('val-balance').innerHTML =
+          `$${last.balance.toLocaleString('en-US', {minimumFractionDigits:2})}`;
+
+        const inceptionPct = ((last.balance - first.balance) / first.balance * 100);
+        document.getElementById('val-inception').innerHTML = fmtPct(inceptionPct);
+
+        const m1 = data[Math.max(0, data.length - 22)];
+        const pct1m = ((last.balance - m1.balance) / m1.balance * 100);
+        document.getElementById('val-1m').innerHTML = fmtPct(pct1m);
+
+        const w1 = data[Math.max(0, data.length - 6)];
+        const pct1w = ((last.balance - w1.balance) / w1.balance * 100);
+        document.getElementById('val-1w').innerHTML = fmtPct(pct1w);
+
+        if (last.pct_change !== null) {
+          document.getElementById('val-1d').innerHTML = fmtPct(last.pct_change);
+        }
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>
