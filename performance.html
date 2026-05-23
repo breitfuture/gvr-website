@@ -8,9 +8,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    .benchmark-legend {
+      display: flex; gap: 1.5rem; margin-top: .75rem;
+      font-size: .8rem; color: var(--muted);
+    }
+    .legend-dot {
+      display: inline-block; width: 10px; height: 10px;
+      border-radius: 50%; margin-right: .4rem;
+    }
+  </style>
 </head>
 <body>
-
   <nav class="nav">
     <a href="index.html" class="nav-brand">
       <svg class="nav-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
@@ -33,12 +42,12 @@
 
   <div class="page-header">
     <h1>Performance</h1>
-    <p>Roth IRA · Inception Sept 18, 2025 · Investment returns only, transfers excluded</p>
+    <p>Roth IRA · Inception September 18, 2025 · Investment returns only — cash deposits excluded</p>
   </div>
 
   <div class="page-content">
 
-    <div class="perf-stats-grid" id="stats-grid">
+    <div class="perf-stats-grid">
       <div class="perf-stat">
         <div class="perf-stat-label">Balance</div>
         <div class="perf-stat-value" id="s-balance">—</div>
@@ -60,14 +69,21 @@
         <div class="perf-stat-value" id="s-3m">—</div>
       </div>
       <div class="perf-stat">
-        <div class="perf-stat-label">6 Month</div>
-        <div class="perf-stat-value" id="s-6m">—</div>
+        <div class="perf-stat-label">Since Inception (9/18/25)</div>
+        <div class="perf-stat-value" id="s-inception">—</div>
       </div>
     </div>
 
     <div class="chart-container">
       <div class="chart-header">
-        <div class="chart-title">Portfolio Growth</div>
+        <div>
+          <div class="chart-title">Investment Return % vs Benchmarks</div>
+          <div class="benchmark-legend">
+            <span><span class="legend-dot" style="background:#c9a84c"></span>GVR Portfolio (since 9/18/25)</span>
+            <span><span class="legend-dot" style="background:#4a9eff"></span>VOO (S&P 500)</span>
+            <span><span class="legend-dot" style="background:#a78bfa"></span>QQQ (Nasdaq)</span>
+          </div>
+        </div>
         <div class="chart-toggle">
           <button class="chart-btn active" onclick="setRange('all', this)">All</button>
           <button class="chart-btn" onclick="setRange('6m', this)">6M</button>
@@ -75,32 +91,16 @@
           <button class="chart-btn" onclick="setRange('1m', this)">1M</button>
         </div>
       </div>
-      <canvas id="perfChart" height="320"></canvas>
-    </div>
-
-    <div class="chart-container">
-      <div class="chart-header">
-        <div class="chart-title">Daily Log</div>
+      <div style="position:relative; height:340px;">
+        <canvas id="perfChart"></canvas>
       </div>
-      <div class="port-table-wrap" style="border:none;">
-        <table>
-          <thead>
-            <tr>
-              <th style="text-align:left">Date</th>
-              <th>Balance</th>
-              <th>$ Change</th>
-              <th>% Change</th>
-            </tr>
-          </thead>
-          <tbody id="daily-table-body"></tbody>
-        </table>
-      </div>
+      <div id="benchmark-status" style="font-size:.75rem;color:var(--muted);margin-top:.5rem;"></div>
     </div>
 
   </div>
 
   <div class="disclosure-banner">
-    <strong>Disclosure:</strong> Performance reflects investment returns only. Cash transfers (deposits) are excluded from return calculations. Past performance does not guarantee future results. This is not investment advice. <a href="disclosures.html">Full disclosures →</a>
+    <strong>Disclosure:</strong> Performance reflects investment returns only from inception date of September 18, 2025. Cash deposits are excluded from return calculations. Benchmark data sourced from Alpha Vantage. Past performance does not guarantee future results. This is not investment advice. <a href="disclosures.html">Full disclosures →</a>
   </div>
 
   <footer class="footer">
@@ -110,57 +110,96 @@
 
   <script src="js/main.js"></script>
   <script>
+    const AV_KEY = 'BYVXLVGBXP7YEXBI';
     let allData = [];
+    let vooData = {}, qqqData = {};
     let chart;
 
-    const fmtDollar = v => {
-      if (v === null || v === undefined) return '—';
-      const abs = Math.abs(v).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
-      return v >= 0 ? `+$${abs}` : `-$${abs}`;
-    };
     const fmtPct = v => {
       if (v === null || v === undefined) return '—';
       return (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
     };
     const colorClass = v => v === null ? '' : (v >= 0 ? 'pos' : 'neg');
 
-    function calcPct(data, lookback) {
+    function slicePct(data, lookback) {
       if (data.length < 2) return null;
       const end = data[data.length - 1];
       const start = data[Math.max(0, data.length - 1 - lookback)];
-      return (end.balance - start.balance) / start.balance * 100;
+      const endIdx = 100 + end.cum_return;
+      const startIdx = 100 + start.cum_return;
+      return (endIdx - startIdx) / startIdx * 100;
+    }
+
+    function normalizePrices(dates, priceMap) {
+      const prices = dates.map(d => priceMap[d] || null);
+      const firstVal = prices.find(p => p !== null);
+      if (!firstVal) return prices.map(() => null);
+      return prices.map(p => p !== null ? ((p - firstVal) / firstVal * 100) : null);
+    }
+
+    function rebaseCumReturn(data) {
+      if (!data.length) return data;
+      const startCum = 100 + data[0].cum_return;
+      return data.map((d, i) => ({
+        ...d,
+        cum_return: i === 0 ? 0 : ((100 + d.cum_return) - startCum) / startCum * 100
+      }));
     }
 
     function buildChart(data) {
       const labels = data.map(d => d.date);
-      const values = data.map(d => d.balance);
+      const gvrReturns = data.map(d => d.cum_return);
+      const vooNorm = normalizePrices(labels, vooData);
+      const qqqNorm = normalizePrices(labels, qqqData);
+
       const ctx = document.getElementById('perfChart').getContext('2d');
-
       if (chart) chart.destroy();
-
-      const grad = ctx.createLinearGradient(0, 0, 0, 320);
-      grad.addColorStop(0, 'rgba(201,168,76,0.25)');
-      grad.addColorStop(1, 'rgba(201,168,76,0.0)');
 
       chart = new Chart(ctx, {
         type: 'line',
         data: {
           labels,
-          datasets: [{
-            label: 'GVR Portfolio',
-            data: values,
-            borderColor: '#c9a84c',
-            backgroundColor: grad,
-            borderWidth: 2,
-            pointRadius: 0,
-            pointHoverRadius: 4,
-            pointHoverBackgroundColor: '#c9a84c',
-            fill: true,
-            tension: 0.3,
-          }]
+          datasets: [
+            {
+              label: 'GVR Portfolio',
+              data: gvrReturns,
+              borderColor: '#c9a84c',
+              backgroundColor: 'rgba(201,168,76,0.08)',
+              borderWidth: 2.5,
+              pointRadius: 0,
+              pointHoverRadius: 4,
+              fill: true,
+              tension: 0.3,
+            },
+            {
+              label: 'VOO',
+              data: vooNorm,
+              borderColor: '#4a9eff',
+              backgroundColor: 'transparent',
+              borderWidth: 1.5,
+              pointRadius: 0,
+              pointHoverRadius: 3,
+              fill: false,
+              tension: 0.3,
+              borderDash: [4, 3],
+            },
+            {
+              label: 'QQQ',
+              data: qqqNorm,
+              borderColor: '#a78bfa',
+              backgroundColor: 'transparent',
+              borderWidth: 1.5,
+              pointRadius: 0,
+              pointHoverRadius: 3,
+              fill: false,
+              tension: 0.3,
+              borderDash: [4, 3],
+            }
+          ]
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
             legend: { display: false },
@@ -171,7 +210,11 @@
               titleColor: '#c9a84c',
               bodyColor: '#f4f1ea',
               callbacks: {
-                label: ctx => ' $' + ctx.parsed.y.toLocaleString('en-US', {minimumFractionDigits:2})
+                label: ctx => {
+                  const v = ctx.parsed.y;
+                  if (v === null) return null;
+                  return ` ${ctx.dataset.label}: ${v >= 0 ? '+' : ''}${v.toFixed(2)}%`;
+                }
               }
             }
           },
@@ -180,15 +223,14 @@
               grid: { color: 'rgba(255,255,255,0.04)' },
               ticks: {
                 color: '#8a94a8', font: { size: 11 },
-                maxTicksLimit: 8,
-                maxRotation: 0,
+                maxTicksLimit: 8, maxRotation: 0
               }
             },
             y: {
               grid: { color: 'rgba(255,255,255,0.04)' },
               ticks: {
                 color: '#8a94a8', font: { size: 11 },
-                callback: v => '$' + v.toLocaleString('en-US')
+                callback: v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%'
               }
             }
           }
@@ -204,25 +246,29 @@
       else if (range === '6m') slice = allData.slice(-130);
       else if (range === '3m') slice = allData.slice(-65);
       else if (range === '1m') slice = allData.slice(-22);
-      buildChart(slice);
+      buildChart(rebaseCumReturn(slice));
     }
 
-    function buildTable(data) {
-      const tbody = document.getElementById('daily-table-body');
-      const rows = [...data].reverse().slice(0, 60);
-      tbody.innerHTML = rows.map(d => `
-        <tr>
-          <td>${d.date}</td>
-          <td>$${d.balance.toLocaleString('en-US', {minimumFractionDigits:2})}</td>
-          <td class="${colorClass(d.dollar_change)}">${fmtDollar(d.dollar_change)}</td>
-          <td class="${colorClass(d.pct_change)}">${fmtPct(d.pct_change)}</td>
-        </tr>
-      `).join('');
+    async function fetchBenchmark(symbol) {
+      try {
+        const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${symbol}&outputsize=full&apikey=${AV_KEY}`;
+        const res = await fetch(url);
+        const json = await res.json();
+        const ts = json['Time Series (Daily)'];
+        if (!ts) return {};
+        const out = {};
+        for (const [date, vals] of Object.entries(ts)) {
+          out[date] = parseFloat(vals['5. adjusted close']);
+        }
+        return out;
+      } catch(e) {
+        return {};
+      }
     }
 
     fetch('data/performance.json')
       .then(r => r.json())
-      .then(data => {
+      .then(async data => {
         allData = data;
         const last = data[data.length - 1];
 
@@ -230,21 +276,37 @@
           `$${last.balance.toLocaleString('en-US', {minimumFractionDigits:2})}`;
 
         const stats = [
-          ['s-1d', last.pct_change],
-          ['s-1w', calcPct(data, 5)],
-          ['s-1m', calcPct(data, 21)],
-          ['s-3m', calcPct(data, 63)],
-          ['s-6m', calcPct(data, 126)],
+          ['s-1d',        last.pct_change],
+          ['s-1w',        slicePct(data, 5)],
+          ['s-1m',        slicePct(data, 21)],
+          ['s-3m',        slicePct(data, 63)],
+          ['s-inception', last.cum_return],
         ];
         stats.forEach(([id, val]) => {
           const el = document.getElementById(id);
-          if (val !== null) {
+          if (val !== null && val !== undefined) {
             el.innerHTML = `<span class="${colorClass(val)}">${fmtPct(val)}</span>`;
           }
         });
 
+        // Build chart with GVR data first
         buildChart(data);
-        buildTable(data);
+
+        // Fetch benchmarks
+        document.getElementById('benchmark-status').textContent = 'Loading benchmark data...';
+        const [voo, qqq] = await Promise.all([
+          fetchBenchmark('VOO'),
+          fetchBenchmark('QQQ')
+        ]);
+        vooData = voo;
+        qqqData = qqq;
+
+        const hasData = Object.keys(voo).length > 0;
+        document.getElementById('benchmark-status').textContent = hasData
+          ? '' : 'Benchmark data unavailable.';
+
+        // Rebuild with benchmarks
+        buildChart(data);
       });
   </script>
 </body>

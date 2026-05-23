@@ -9,8 +9,6 @@
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-
-  <!-- NAV -->
   <nav class="nav">
     <a href="index.html" class="nav-brand">
       <svg class="nav-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
@@ -31,11 +29,10 @@
     <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow">Independent Research · Personal Portfolio</div>
+      <div class="hero-eyebrow">Independent Research · Personal Portfolio · Since Sept 18, 2025</div>
       <h1 class="hero-title">Generating Alpha<br><em>Through Analysis</em></h1>
       <p class="hero-sub">A transparent research journal documenting the build of a systematic stock scoring framework, portfolio decision-making, and continuous process refinement in pursuit of disciplined, risk-aware alpha.</p>
       <div class="hero-cta">
@@ -44,13 +41,13 @@
       </div>
     </div>
     <div class="hero-stat-bar">
-      <div class="stat-item" id="stat-balance">
+      <div class="stat-item">
         <div class="stat-label">Current Balance</div>
         <div class="stat-value" id="val-balance">—</div>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
-        <div class="stat-label">Since Inception</div>
+        <div class="stat-label">Since Inception (9/18/25)</div>
         <div class="stat-value" id="val-inception">—</div>
       </div>
       <div class="stat-divider"></div>
@@ -71,7 +68,6 @@
     </div>
   </section>
 
-  <!-- ABOUT STRIP -->
   <section class="about-strip">
     <div class="about-grid">
       <div class="about-card">
@@ -92,7 +88,6 @@
     </div>
   </section>
 
-  <!-- DISCLOSURE BANNER -->
   <div class="disclosure-banner">
     <strong>Important Disclosure:</strong> Golden Valley Research is an independent research project for educational and informational purposes only. Nothing on this site constitutes investment advice, a solicitation, or a recommendation to buy or sell any security. All investments involve risk. Past performance does not guarantee future results. The author may hold positions in securities discussed. <a href="disclosures.html">Read full disclosures →</a>
   </div>
@@ -109,7 +104,6 @@
       .then(data => {
         if (!data.length) return;
         const last = data[data.length - 1];
-        const first = data[0];
 
         const fmtPct = v => v >= 0
           ? `<span class="pos">+${v.toFixed(2)}%</span>`
@@ -118,16 +112,19 @@
         document.getElementById('val-balance').innerHTML =
           `$${last.balance.toLocaleString('en-US', {minimumFractionDigits:2})}`;
 
-        const inceptionPct = ((last.balance - first.balance) / first.balance * 100);
-        document.getElementById('val-inception').innerHTML = fmtPct(inceptionPct);
+        document.getElementById('val-inception').innerHTML = fmtPct(last.cum_return);
 
-        const m1 = data[Math.max(0, data.length - 22)];
-        const pct1m = ((last.balance - m1.balance) / m1.balance * 100);
-        document.getElementById('val-1m').innerHTML = fmtPct(pct1m);
+        const calcCumPct = (data, lookback) => {
+          const end = data[data.length - 1];
+          const start = data[Math.max(0, data.length - 1 - lookback)];
+          if (!start || start.cum_return === undefined) return null;
+          const endIdx = 100 + end.cum_return;
+          const startIdx = 100 + start.cum_return;
+          return (endIdx - startIdx) / startIdx * 100;
+        };
 
-        const w1 = data[Math.max(0, data.length - 6)];
-        const pct1w = ((last.balance - w1.balance) / w1.balance * 100);
-        document.getElementById('val-1w').innerHTML = fmtPct(pct1w);
+        document.getElementById('val-1m').innerHTML = fmtPct(calcCumPct(data, 21));
+        document.getElementById('val-1w').innerHTML = fmtPct(calcCumPct(data, 5));
 
         if (last.pct_change !== null) {
           document.getElementById('val-1d').innerHTML = fmtPct(last.pct_change);

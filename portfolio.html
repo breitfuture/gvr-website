@@ -8,22 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css" />
   <style>
-    .upload-zone {
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      text-align: center;
-      margin-bottom: 2rem;
-      cursor: pointer;
-      transition: border-color .2s;
-    }
-    .upload-zone:hover { border-color: var(--gold); }
-    .upload-zone p { color: var(--muted); font-size: .875rem; }
-    .upload-zone strong { color: var(--gold); }
-    .last-updated {
-      font-size: .75rem; color: var(--muted);
-      margin-bottom: 1rem; text-align: right;
-    }
     .port-summary {
       display: grid; grid-template-columns: repeat(4,1fr);
       gap: 1rem; margin-bottom: 2rem;
@@ -34,11 +18,12 @@
     }
     .port-sum-label { font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
     .port-sum-value { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; }
-    #file-input { display: none; }
+    .last-updated { font-size: .75rem; color: var(--muted); margin-bottom: 1rem; text-align: right; }
+    .option-row td { font-style: italic; }
+    .cash-row td:first-child { color: var(--muted); }
   </style>
 </head>
 <body>
-
   <nav class="nav">
     <a href="index.html" class="nav-brand">
       <svg class="nav-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
@@ -66,12 +51,6 @@
 
   <div class="page-content">
 
-    <div class="upload-zone" onclick="document.getElementById('file-input').click()">
-      <input type="file" id="file-input" accept=".csv,.xlsx" onchange="handleUpload(event)" />
-      <strong>Upload Fidelity Export</strong>
-      <p>Click to upload your daily Fidelity CSV or Excel positions export</p>
-    </div>
-
     <div class="port-summary">
       <div class="port-sum-card">
         <div class="port-sum-label">Total Value</div>
@@ -98,18 +77,20 @@
         <thead>
           <tr>
             <th>Symbol</th>
-            <th>Name</th>
+            <th>Description</th>
             <th>Qty</th>
             <th>Last Price</th>
             <th>Avg Cost</th>
             <th>Current Value</th>
             <th>Total Gain $</th>
             <th>Total Gain %</th>
-            <th>% of Account</th>
+            <th>Today $</th>
+            <th>Today %</th>
+            <th>% of Acct</th>
           </tr>
         </thead>
         <tbody id="portfolio-tbody">
-          <tr><td colspan="9" style="text-align:center;color:var(--muted);padding:3rem;">Upload a Fidelity export to populate this table</td></tr>
+          <tr><td colspan="11" style="text-align:center;color:var(--muted);padding:3rem;">Loading portfolio...</td></tr>
         </tbody>
       </table>
     </div>
@@ -117,7 +98,7 @@
   </div>
 
   <div class="disclosure-banner">
-    <strong>Disclosure:</strong> Portfolio data is uploaded manually from Fidelity and may not reflect real-time prices. This is not investment advice. <a href="disclosures.html">Full disclosures →</a>
+    <strong>Disclosure:</strong> Portfolio data reflects positions as of the date shown and may not reflect real-time prices. This is not investment advice. <a href="disclosures.html">Full disclosures →</a>
   </div>
 
   <footer class="footer">
@@ -126,103 +107,61 @@
   </footer>
 
   <script src="js/main.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script>
-    function handleUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      Papa.parse(file, {
-        header: true, skipEmptyLines: true,
-        complete: results => renderPortfolio(results.data, file.name)
+    const fmt$ = v => v !== null && v !== undefined
+      ? '$' + Math.abs(v).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})
+      : '—';
+    const fmtChg$ = v => v !== null && v !== undefined
+      ? `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':'-'}$${Math.abs(v).toFixed(2)}</span>`
+      : '—';
+    const fmtPct = v => v !== null && v !== undefined
+      ? `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':''}${v.toFixed(2)}%</span>`
+      : '—';
+
+    fetch('data/portfolio.json')
+      .then(r => r.json())
+      .then(meta => {
+        const positions = meta.positions;
+        document.getElementById('last-updated').textContent = `As of ${meta.date} · ${meta.account}`;
+
+        let totalValue = 0, totalGL = 0, totalToday = 0, count = 0;
+        positions.forEach(p => {
+          if (p.value) totalValue += p.value;
+          if (p.total_gl_dollar) totalGL += p.total_gl_dollar;
+          if (p.today_gl_dollar) totalToday += p.today_gl_dollar;
+          if (p.symbol !== 'CASH') count++;
+        });
+
+        document.getElementById('sum-value').textContent =
+          '$' + totalValue.toLocaleString('en-US', {minimumFractionDigits:2});
+        document.getElementById('sum-gl').innerHTML = fmtChg$(totalGL);
+        document.getElementById('sum-today').innerHTML = fmtChg$(totalToday);
+        document.getElementById('sum-count').textContent = count;
+
+        const tbody = document.getElementById('portfolio-tbody');
+        tbody.innerHTML = positions.map(p => {
+          const isCash = p.symbol === 'CASH';
+          const isOption = p.symbol && p.symbol.includes('-');
+          const rowClass = isCash ? 'cash-row' : isOption ? 'option-row' : '';
+          return `<tr class="${rowClass}">
+            <td class="${isCash ? '' : 'ticker-cell'}">${p.symbol}</td>
+            <td class="name-cell">${(p.description||'').substring(0,35)}</td>
+            <td>${p.qty !== null ? p.qty : '—'}</td>
+            <td>${p.price !== null ? fmt$(p.price) : '—'}</td>
+            <td>${p.avg_cost !== null ? fmt$(p.avg_cost) : '—'}</td>
+            <td>${p.value !== null ? '$'+p.value.toLocaleString('en-US',{minimumFractionDigits:2}) : '—'}</td>
+            <td>${fmtChg$(p.total_gl_dollar)}</td>
+            <td>${fmtPct(p.total_gl_pct)}</td>
+            <td>${fmtChg$(p.today_gl_dollar)}</td>
+            <td>${fmtPct(p.today_gl_pct)}</td>
+            <td>${p.pct_acct !== null ? p.pct_acct.toFixed(2)+'%' : '—'}</td>
+          </tr>`;
+        }).join('');
+      })
+      .catch(() => {
+        document.getElementById('portfolio-tbody').innerHTML =
+          '<tr><td colspan="11" style="text-align:center;color:var(--muted);padding:2rem;">Unable to load portfolio data</td></tr>';
       });
-    }
-
-    function cleanNum(val) {
-      if (!val) return null;
-      const s = String(val).replace(/[$,%\s]/g,'').replace(/[()]/g,m => m==='('?'-':'');
-      return parseFloat(s) || null;
-    }
-
-    function renderPortfolio(rows, filename) {
-      const tbody = document.getElementById('portfolio-tbody');
-      let html = '';
-      let totalValue = 0, totalGL = 0, totalToday = 0;
-
-      rows.forEach(row => {
-        const keys = Object.keys(row);
-        const get = (...names) => {
-          for (const n of names) {
-            const k = keys.find(k => k.toLowerCase().includes(n.toLowerCase()));
-            if (k) return row[k];
-          }
-          return '';
-        };
-
-        const symbol = get('symbol','ticker') || '';
-        if (!symbol || symbol === 'Account' || symbol === 'Pending') return;
-
-        const name = get('description','name','security') || '';
-        const qty = cleanNum(get('quantity','shares','qty'));
-        const price = cleanNum(get('last price','current price','price'));
-        const cost = cleanNum(get('average cost','avg cost','cost basis per'));
-        const value = cleanNum(get('current value','market value','value'));
-        const glDollar = cleanNum(get('total gain/loss $','gain/loss $','total gain'));
-        const glPct = cleanNum(get('total gain/loss %','gain/loss %','total gain/loss pct'));
-        const todayDollar = cleanNum(get("today's gain/loss $","today's change"));
-        const pctAcct = cleanNum(get('% of account','% account','weight'));
-
-        if (value) totalValue += value;
-        if (glDollar) totalGL += glDollar;
-        if (todayDollar) totalToday += todayDollar;
-
-        const glClass = glDollar >= 0 ? 'pos' : 'neg';
-        const todayClass = todayDollar >= 0 ? 'pos' : 'neg';
-
-        html += `<tr>
-          <td class="ticker-cell">${symbol}</td>
-          <td class="name-cell">${name.substring(0,30)}</td>
-          <td>${qty ?? '—'}</td>
-          <td>${price ? '$'+price.toFixed(2) : '—'}</td>
-          <td>${cost ? '$'+cost.toFixed(2) : '—'}</td>
-          <td>${value ? '$'+value.toLocaleString('en-US',{minimumFractionDigits:2}) : '—'}</td>
-          <td class="${glClass}">${glDollar ? (glDollar>=0?'+':'')+' $'+Math.abs(glDollar).toFixed(2) : '—'}</td>
-          <td class="${glClass}">${glPct ? (glPct>=0?'+':'')+glPct.toFixed(2)+'%' : '—'}</td>
-          <td>${pctAcct ? pctAcct.toFixed(2)+'%' : '—'}</td>
-        </tr>`;
-      });
-
-      tbody.innerHTML = html || '<tr><td colspan="9" style="text-align:center;color:var(--muted)">No positions found in file</td></tr>';
-
-      document.getElementById('sum-value').textContent =
-        totalValue ? '$'+totalValue.toLocaleString('en-US',{minimumFractionDigits:2}) : '—';
-      const glEl = document.getElementById('sum-gl');
-      glEl.innerHTML = totalGL
-        ? `<span class="${totalGL>=0?'pos':'neg'}">${totalGL>=0?'+':''} $${Math.abs(totalGL).toLocaleString('en-US',{minimumFractionDigits:2})}</span>`
-        : '—';
-      const todayEl = document.getElementById('sum-today');
-      todayEl.innerHTML = totalToday
-        ? `<span class="${totalToday>=0?'pos':'neg'}">${totalToday>=0?'+':''} $${Math.abs(totalToday).toFixed(2)}</span>`
-        : '—';
-      document.getElementById('sum-count').textContent =
-        rows.filter(r => r[Object.keys(r)[0]] && !['Account','Pending'].includes(r[Object.keys(r)[0]])).length;
-
-      document.getElementById('last-updated').textContent =
-        `Last updated: ${new Date().toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'})} from ${filename}`;
-
-      localStorage.setItem('gvr_portfolio', JSON.stringify({
-        rows, filename, timestamp: new Date().toISOString()
-      }));
-    }
-
-    window.addEventListener('load', () => {
-      const saved = localStorage.getItem('gvr_portfolio');
-      if (saved) {
-        const { rows, filename, timestamp } = JSON.parse(saved);
-        renderPortfolio(rows, filename);
-        document.getElementById('last-updated').textContent =
-          `Last updated: ${new Date(timestamp).toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric'})} from ${filename}`;
-      }
-    });
   </script>
 </body>
 </html>
