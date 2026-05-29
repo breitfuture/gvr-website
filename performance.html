@@ -102,7 +102,7 @@
         <div class="perf-stat-value" id="s-inception">—</div>
       </div>
     </div>
- 
+
     <!-- Dollar growth card -->
     <div class="dollar-growth-card">
       <div>
@@ -111,7 +111,7 @@
         <div class="dollar-growth-detail" id="s-dollar-growth-detail">—</div>
       </div>
     </div>
- 
+
     <div class="chart-container">
       <div class="chart-header">
         <div>
@@ -202,7 +202,9 @@
       "2026-05-12": 678.67, "2026-05-13": 682.41, "2026-05-14": 687.73,
       "2026-05-15": 679.44, "2026-05-18": 678.91, "2026-05-19": 674.59,
       "2026-05-20": 681.57, "2026-05-21": 682.84, "2026-05-22": 685.55,
-      "2026-05-26": 690.01
+      "2026-05-26": 690.01,
+      "2026-05-27": 689.96,
+      "2026-05-28": 693.91
       // ← ADD NEW VOO ENTRIES HERE: "YYYY-MM-DD": price,
     };
     const qqqPrices = {
@@ -263,10 +265,12 @@
       "2026-05-12": 707.24, "2026-05-13": 714.71, "2026-05-14": 719.79,
       "2026-05-15": 708.93, "2026-05-18": 705.88, "2026-05-19": 701.53,
       "2026-05-20": 713.15, "2026-05-21": 714.51, "2026-05-22": 717.54,
-      "2026-05-26": 730.28
+      "2026-05-26": 730.28,
+      "2026-05-27": 729.45,
+      "2026-05-28": 735.6
       // ← ADD NEW QQQ ENTRIES HERE: "YYYY-MM-DD": price,
     };
- 
+
     let allData = [];
     let chart;
     const fmtPct = v => {
@@ -419,11 +423,11 @@
         allData = data;
         const first = data[0];
         const last = data[data.length - 1];
- 
+
         // Balance
         document.getElementById('s-balance').innerHTML =
           `$${last.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
- 
+
         // Pct stats
         const stats = [
           ['s-1d',        last.pct_change],
@@ -438,7 +442,7 @@
             el.innerHTML = `<span class="${colorClass(val)}">${fmtPct(val)}</span>`;
           }
         });
- 
+
         // ─────────────────────────────────────────────────────────────────
         // DOLLAR INVESTMENT GAIN SINCE INCEPTION OF ACTIVE MANAGEMENT
         //
@@ -474,10 +478,9 @@
         growthEl.innerHTML = `<span class="${dollarGrowth >= 0 ? 'pos' : 'neg'}">${sign}$${absGrowth}</span>`;
         document.getElementById('s-dollar-growth-detail').textContent =
           `Cost basis $${costBasis.toLocaleString('en-US', { minimumFractionDigits: 2 })} (inception $${inceptionBalance.toLocaleString('en-US',{minimumFractionDigits:2})} + $${totalContributions.toLocaleString('en-US',{minimumFractionDigits:2})} contributions) · Current balance $${last.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })} as of ${last.date}`;
- 
+
         buildChart(data);
       });
   </script>
 </body>
 </html>
-

@@ -1,4 +1,3 @@
-Portfolio · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +21,6 @@ Portfolio · HTML
     .last-updated { font-size: .75rem; color: var(--muted); margin-bottom: 1rem; text-align: right; }
     .option-row td { font-style: italic; }
     .cash-row td:first-child { color: var(--muted); }
-    /* Totals row */
     .totals-row td {
       border-top: 2px solid var(--border);
       font-weight: 600;
@@ -66,7 +64,7 @@ Portfolio · HTML
   <div class="page-content">
     <div class="port-summary">
       <div class="port-sum-card">
-        <div class="port-sum-label">Total Value</div>
+        <div class="port-sum-label">Total Account Value</div>
         <div class="port-sum-value" id="sum-value">—</div>
       </div>
       <div class="port-sum-card">
@@ -78,7 +76,7 @@ Portfolio · HTML
         <div class="port-sum-value" id="sum-today">—</div>
       </div>
       <div class="port-sum-card">
-        <div class="port-sum-label">Positions</div>
+        <div class="port-sum-label">Open Positions</div>
         <div class="port-sum-value" id="sum-count">—</div>
       </div>
     </div>
@@ -115,83 +113,82 @@ Portfolio · HTML
   </footer>
   <script src="js/main.js"></script>
   <script>
-    const fmt$ = v => v !== null && v !== undefined
+    const fmt$ = v => v != null
       ? '$' + Math.abs(v).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})
       : '—';
-    const fmtChg$ = v => v !== null && v !== undefined
-      ? `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':'-'}$${Math.abs(v).toFixed(2)}</span>`
+    const fmtChg$ = v => v != null
+      ? `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':'-'}$${Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>`
       : '—';
-    const fmtPct = v => v !== null && v !== undefined
+    const fmtPct = v => v != null
       ? `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':''}${v.toFixed(2)}%</span>`
       : '—';
- 
+
     fetch('data/portfolio.json')
       .then(r => r.json())
       .then(meta => {
         const positions = meta.positions;
         document.getElementById('last-updated').textContent = `As of ${meta.date} · ${meta.account}`;
- 
+
+        // Summary cards — sum all positions including cash for total value
         let totalValue = 0, totalGL = 0, totalToday = 0, count = 0;
         positions.forEach(p => {
-          if (p.value) totalValue += p.value;
-          if (p.total_gl_dollar) totalGL += p.total_gl_dollar;
-          if (p.today_gl_dollar) totalToday += p.today_gl_dollar;
+          if (p.value != null) totalValue += p.value;
+          if (p.total_gl_dollar != null) totalGL += p.total_gl_dollar;
+          if (p.today_gl_dollar != null) totalToday += p.today_gl_dollar;
           if (p.symbol !== 'CASH') count++;
         });
- 
+
         document.getElementById('sum-value').textContent =
           '$' + totalValue.toLocaleString('en-US', {minimumFractionDigits:2});
         document.getElementById('sum-gl').innerHTML = fmtChg$(totalGL);
         document.getElementById('sum-today').innerHTML = fmtChg$(totalToday);
         document.getElementById('sum-count').textContent = count;
- 
-        // Aggregate totals for invested positions only (exclude CASH)
+
+        // Totals row — sum invested positions only (excl cash), straight column sums like Fidelity
         const invested = positions.filter(p => p.symbol !== 'CASH');
-        let aggValue = 0, aggCost = 0, aggGainDollar = 0, aggTodayDollar = 0, aggPctAcct = 0;
+        let aggValue = 0, aggGL = 0, aggToday = 0, aggPct = 0, aggCost = 0;
         invested.forEach(p => {
-          if (p.value != null) aggValue += p.value;
-          if (p.cost_total != null) aggCost += p.cost_total;
-          if (p.total_gl_dollar != null) aggGainDollar += p.total_gl_dollar;
-          if (p.today_gl_dollar != null) aggTodayDollar += p.today_gl_dollar;
-          if (p.pct_acct != null) aggPctAcct += p.pct_acct;
+          if (p.value != null)          aggValue   += p.value;
+          if (p.total_gl_dollar != null) aggGL      += p.total_gl_dollar;
+          if (p.today_gl_dollar != null) aggToday   += p.today_gl_dollar;
+          if (p.pct_acct != null)        aggPct     += p.pct_acct;
+          if (p.cost_total != null)      aggCost    += p.cost_total;
         });
-        const aggGainPct = aggCost > 0 ? (aggGainDollar / aggCost) * 100 : null;
-        const aggTodayPct = (aggValue - aggTodayDollar) > 0
-          ? (aggTodayDollar / (aggValue - aggTodayDollar)) * 100
-          : null;
- 
+        const aggGLPct  = aggCost  > 0 ? (aggGL    / aggCost)            * 100 : null;
+        const aggTdyPct = aggValue > 0 ? (aggToday / (aggValue - aggToday)) * 100 : null;
+
+        // Render rows
         const tbody = document.getElementById('portfolio-tbody');
         const rows = positions.map(p => {
-          const isCash = p.symbol === 'CASH';
+          const isCash   = p.symbol === 'CASH';
           const isOption = p.symbol && p.symbol.includes('-');
-          const rowClass = isCash ? 'cash-row' : isOption ? 'option-row' : '';
-          return `<tr class="${rowClass}">
+          const cls = isCash ? 'cash-row' : isOption ? 'option-row' : '';
+          return `<tr class="${cls}">
             <td class="${isCash ? '' : 'ticker-cell'}">${p.symbol}</td>
             <td class="name-cell">${(p.description||'').substring(0,35)}</td>
-            <td>${p.qty !== null ? p.qty : '—'}</td>
-            <td>${p.price !== null ? fmt$(p.price) : '—'}</td>
-            <td>${p.avg_cost !== null ? fmt$(p.avg_cost) : '—'}</td>
-            <td>${p.value !== null ? '$'+p.value.toLocaleString('en-US',{minimumFractionDigits:2}) : '—'}</td>
+            <td>${p.qty != null ? p.qty : '—'}</td>
+            <td>${p.price != null ? fmt$(p.price) : '—'}</td>
+            <td>${p.avg_cost != null ? fmt$(p.avg_cost) : '—'}</td>
+            <td>${p.value != null ? '$' + p.value.toLocaleString('en-US',{minimumFractionDigits:2}) : '—'}</td>
             <td>${fmtChg$(p.total_gl_dollar)}</td>
             <td>${fmtPct(p.total_gl_pct)}</td>
             <td>${fmtChg$(p.today_gl_dollar)}</td>
             <td>${fmtPct(p.today_gl_pct)}</td>
-            <td>${p.pct_acct !== null ? p.pct_acct.toFixed(2)+'%' : '—'}</td>
+            <td>${p.pct_acct != null ? p.pct_acct.toFixed(2)+'%' : '—'}</td>
           </tr>`;
         }).join('');
- 
-        // Totals row
+
         const totalsRow = `<tr class="totals-row">
-          <td>Portfolio Total</td>
-          <td colspan="4">All invested positions (excl. cash)</td>
+          <td>Total</td>
+          <td colspan="4" style="color:var(--muted);font-size:.75rem;font-weight:400;">Invested positions excl. cash</td>
           <td>$${aggValue.toLocaleString('en-US',{minimumFractionDigits:2})}</td>
-          <td>${fmtChg$(aggGainDollar)}</td>
-          <td>${aggGainPct !== null ? fmtPct(aggGainPct) : '—'}</td>
-          <td>${fmtChg$(aggTodayDollar)}</td>
-          <td>${aggTodayPct !== null ? fmtPct(aggTodayPct) : '—'}</td>
-          <td>${aggPctAcct.toFixed(2)}%</td>
+          <td>${fmtChg$(aggGL)}</td>
+          <td>${aggGLPct  != null ? fmtPct(aggGLPct)  : '—'}</td>
+          <td>${fmtChg$(aggToday)}</td>
+          <td>${aggTdyPct != null ? fmtPct(aggTdyPct) : '—'}</td>
+          <td>${aggPct.toFixed(2)}%</td>
         </tr>`;
- 
+
         tbody.innerHTML = rows + totalsRow;
       })
       .catch(() => {
