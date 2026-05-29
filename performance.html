@@ -17,6 +17,37 @@
       display: inline-block; width: 10px; height: 10px;
       border-radius: 50%; margin-right: .4rem;
     }
+    .dollar-growth-card {
+      background: var(--navy-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .dollar-growth-label {
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .35rem;
+    }
+    .dollar-growth-value {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+    .dollar-growth-detail {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-top: .2rem;
+    }
+    @media (max-width: 600px) {
+      .dollar-growth-card { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -41,9 +72,10 @@
   </nav>
   <div class="page-header">
     <h1>Performance</h1>
-    <p>Roth IRA · Inception September 18, 2025 · Investment returns only — cash deposits excluded</p>
+    <p>Roth IRA · Inception of Active Management September 18, 2025 · Investment returns only — cash deposits excluded</p>
   </div>
   <div class="page-content">
+    <!-- Single-row stats: Balance, Today, 1W, 1M, YTD, Since Inception -->
     <div class="perf-stats-grid">
       <div class="perf-stat">
         <div class="perf-stat-label">Balance</div>
@@ -62,18 +94,24 @@
         <div class="perf-stat-value" id="s-1m">—</div>
       </div>
       <div class="perf-stat">
-        <div class="perf-stat-label">3 Month</div>
-        <div class="perf-stat-value" id="s-3m">—</div>
-      </div>
-      <div class="perf-stat">
         <div class="perf-stat-label">YTD</div>
         <div class="perf-stat-value" id="s-ytd">—</div>
       </div>
       <div class="perf-stat">
-        <div class="perf-stat-label">Since Inception (9/18/25)</div>
+        <div class="perf-stat-label">Since Inception of Active Mgmt (9/18/25)</div>
         <div class="perf-stat-value" id="s-inception">—</div>
       </div>
     </div>
+ 
+    <!-- Dollar growth card -->
+    <div class="dollar-growth-card">
+      <div>
+        <div class="dollar-growth-label">Investment Growth Since Inception of Active Management (9/18/25)</div>
+        <div class="dollar-growth-value" id="s-dollar-growth">—</div>
+        <div class="dollar-growth-detail" id="s-dollar-growth-detail">—</div>
+      </div>
+    </div>
+ 
     <div class="chart-container">
       <div class="chart-header">
         <div>
@@ -98,7 +136,7 @@
     </div>
   </div>
   <div class="disclosure-banner">
-    <strong>Disclosure:</strong> Performance reflects investment returns only from inception date of September 18, 2025. Cash deposits are excluded from return calculations. Benchmark data sourced via Nasdaq. Past performance does not guarantee future results. This is not investment advice. <a href="disclosures.html">Full disclosures →</a>
+    <strong>Disclosure:</strong> Performance reflects investment returns only from inception date of active management on September 18, 2025. Cash deposits are excluded from return calculations. Benchmark data sourced via Nasdaq. Past performance does not guarantee future results. This is not investment advice. <a href="disclosures.html">Full disclosures →</a>
   </div>
   <footer class="footer">
     <span>© 2026 Golden Valley Research</span>
@@ -106,21 +144,6 @@
   </footer>
   <script src="js/main.js"></script>
   <script>
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // BENCHMARK DATA — VOO & QQQ closing prices from 9/18/2025 to present
-    //
-    // HOW TO UPDATE (one day at a time):
-    //   1. Find the last entry in each object below (e.g. "2026-05-26": 690.01)
-    //   2. Add a new line after it with the new date and closing price:
-    //        "2026-05-27": 692.50,   ← add VOO close here
-    //      and in qqqPrices:
-    //        "2026-05-27": 733.10,   ← add QQQ close here
-    //   3. Save the file. That's it.
-    //
-    // Date format: "YYYY-MM-DD"   |   Price: number (no quotes)
-    // ─────────────────────────────────────────────────────────────────────────
-
     const vooPrices = {
       "2025-09-18": 608.94, "2025-09-19": 611.78, "2025-09-22": 614.76,
       "2025-09-23": 611.54, "2025-09-24": 609.5,  "2025-09-25": 606.59,
@@ -182,7 +205,6 @@
       "2026-05-26": 690.01
       // ← ADD NEW VOO ENTRIES HERE: "YYYY-MM-DD": price,
     };
-
     const qqqPrices = {
       "2025-09-18": 595.32, "2025-09-19": 599.35, "2025-09-22": 602.2,
       "2025-09-23": 598.2,  "2025-09-24": 596.1,  "2025-09-25": 593.53,
@@ -244,20 +266,14 @@
       "2026-05-26": 730.28
       // ← ADD NEW QQQ ENTRIES HERE: "YYYY-MM-DD": price,
     };
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // END OF BENCHMARK DATA
-    // ─────────────────────────────────────────────────────────────────────────
-
+ 
     let allData = [];
     let chart;
-
     const fmtPct = v => {
       if (v === null || v === undefined) return '—';
       return (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
     };
     const colorClass = v => v === null ? '' : (v >= 0 ? 'pos' : 'neg');
-
     function slicePct(data, lookback) {
       if (data.length < 2) return null;
       const end = data[data.length - 1];
@@ -266,7 +282,6 @@
       const startIdx = 100 + start.cum_return;
       return (endIdx - startIdx) / startIdx * 100;
     }
-
     function ytdPct(data) {
       const lastOf2025 = [...data].reverse().find(d => d.date <= '2025-12-31');
       const latest = data[data.length - 1];
@@ -275,7 +290,6 @@
       const curr = 100 + latest.cum_return;
       return (curr - base) / base * 100;
     }
-
     function benchmarkForSlice(dates, priceMap) {
       let basePrice = null;
       for (const d of dates) {
@@ -284,7 +298,6 @@
       if (!basePrice) return dates.map(() => null);
       return dates.map(d => priceMap[d] != null ? ((priceMap[d] - basePrice) / basePrice * 100) : null);
     }
-
     function rebaseCumReturn(data) {
       if (!data.length) return data;
       const startCum = 100 + data[0].cum_return;
@@ -293,13 +306,11 @@
         cum_return: i === 0 ? 0 : ((100 + d.cum_return) - startCum) / startCum * 100
       }));
     }
-
     function buildChart(data) {
       const labels = data.map(d => d.date);
       const gvrReturns = data.map(d => d.cum_return);
       const vooNorm = benchmarkForSlice(labels, vooPrices);
       const qqqNorm = benchmarkForSlice(labels, qqqPrices);
-
       const ctx = document.getElementById('perfChart').getContext('2d');
       if (chart) chart.destroy();
       chart = new Chart(ctx, {
@@ -384,7 +395,6 @@
         }
       });
     }
-
     function setRange(range, btn) {
       document.querySelectorAll('.chart-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -403,35 +413,71 @@
       }
       buildChart(rebaseCumReturn(slice));
     }
-
     fetch('data/performance.json')
       .then(r => r.json())
       .then(data => {
         allData = data;
+        const first = data[0];
         const last = data[data.length - 1];
-
+ 
+        // Balance
         document.getElementById('s-balance').innerHTML =
           `$${last.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
-
+ 
+        // Pct stats
         const stats = [
           ['s-1d',        last.pct_change],
           ['s-1w',        slicePct(data, 5)],
           ['s-1m',        slicePct(data, 21)],
-          ['s-3m',        slicePct(data, 63)],
           ['s-ytd',       ytdPct(data)],
           ['s-inception', last.cum_return],
         ];
-
         stats.forEach(([id, val]) => {
           const el = document.getElementById(id);
           if (val !== null && val !== undefined) {
             el.innerHTML = `<span class="${colorClass(val)}">${fmtPct(val)}</span>`;
           }
         });
-
+ 
+        // ─────────────────────────────────────────────────────────────────
+        // DOLLAR INVESTMENT GAIN SINCE INCEPTION OF ACTIVE MANAGEMENT
+        //
+        // Formula: Current Balance − (Starting Balance + All Contributions)
+        //
+        // HOW TO UPDATE:
+        //   1. When you add a new deposit, add it to the contributions array below.
+        //   2. Each entry: { date: "YYYY-MM-DD", amount: 000.00 }
+        //   3. The gain will auto-update once you've also updated the balance
+        //      in performance.json with that day's new balance entry.
+        //
+        // Starting balance at inception of active management (9/18/2025):
+        const inceptionBalance = 4653.00;
+        //
+        // All cash contributions since inception:
+        const contributions = [
+          { date: "2025-09-30", amount: 500.00   },
+          { date: "2025-10-06", amount: 500.00   },
+          { date: "2025-10-15", amount: 750.00   },
+          { date: "2025-10-31", amount: 1000.00  },
+          { date: "2025-12-31", amount: 699.41   },
+          { date: "2026-01-20", amount: 500.00   },
+          { date: "2026-02-13", amount: 500.00   },
+          // ← ADD NEW CONTRIBUTIONS HERE: { date: "YYYY-MM-DD", amount: 000.00 },
+        ];
+        // ─────────────────────────────────────────────────────────────────
+        const totalContributions = contributions.reduce((sum, c) => sum + c.amount, 0);
+        const costBasis = inceptionBalance + totalContributions;
+        const dollarGrowth = last.balance - costBasis;
+        const growthEl = document.getElementById('s-dollar-growth');
+        const sign = dollarGrowth >= 0 ? '+' : '-';
+        const absGrowth = Math.abs(dollarGrowth).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        growthEl.innerHTML = `<span class="${dollarGrowth >= 0 ? 'pos' : 'neg'}">${sign}$${absGrowth}</span>`;
+        document.getElementById('s-dollar-growth-detail').textContent =
+          `Cost basis $${costBasis.toLocaleString('en-US', { minimumFractionDigits: 2 })} (inception $${inceptionBalance.toLocaleString('en-US',{minimumFractionDigits:2})} + $${totalContributions.toLocaleString('en-US',{minimumFractionDigits:2})} contributions) · Current balance $${last.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })} as of ${last.date}`;
+ 
         buildChart(data);
       });
   </script>
 </body>
 </html>
-```
+
