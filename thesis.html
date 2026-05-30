@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-
   <nav class="nav">
     <a href="index.html" class="nav-brand">
       <svg class="nav-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
@@ -29,214 +28,67 @@
     </ul>
     <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
   </nav>
-
   <div class="page-header">
     <h1>Investment Thesis</h1>
-    <p>Open positions · GVR scores as of May 23, 2026</p>
+    <p>Portfolio strategy overview · Updated May 29, 2026</p>
   </div>
-
   <div class="page-content">
-    <div class="thesis-grid">
 
-      <!-- CSTM -->
-      <div class="thesis-card">
-        <div class="thesis-header">
-          <div>
-            <div class="thesis-ticker">CSTM</div>
-            <div class="thesis-name">Constellium SE — Basic Materials</div>
-          </div>
-          <span class="thesis-badge badge-buy">BUY · 73.84</span>
+    <!-- SECTION 1: HIGH CONVICTION OPTIONS -->
+    <div class="thesis-section-label">Highest Conviction — Options Positions</div>
+    <div class="thesis-card" style="margin-bottom:2rem;">
+      <div class="thesis-header">
+        <div>
+          <div class="thesis-ticker">NOW &amp; ONDS</div>
+          <div class="thesis-name">ServiceNow Oct 2026 $100 Call · Ondas Holdings Dec 2026 $9 Call</div>
         </div>
-        <div class="thesis-body">
-          Constellium is a global aluminum products manufacturer serving aerospace, automotive, and packaging end markets. The position was initiated for non-tech diversification exposure with strong fundamental characteristics. GVR scoring confirms the thesis: the stock trades at 10.6x TTM P/E and 5.85x EV/EBITDA — cheap on an absolute basis relative to materials sector peers. EPS grew 302% YoY as the business underwent a significant profitability inflection, with FCF turning from -$93M to +$175M TTM. Operating income grew 82.6% YoY. Analyst revisions are strongly positive with 90-day estimate momentum of +88.6%. The forward P/E of 8.16x implies earnings growth is expected to continue and is not yet fully priced in (PEG of 0.035). The position is sized at ~2% of portfolio — small enough to hold without concern while preserving upside optionality.
-        </div>
-        <div class="thesis-meta">
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">GVR Score</div>
-            <div class="thesis-meta-value">73.84 — BUY</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Valuation</div>
-            <div class="thesis-meta-value">72.5</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Growth</div>
-            <div class="thesis-meta-value">80.25</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Profitability</div>
-            <div class="thesis-meta-value">57.05</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Revisions</div>
-            <div class="thesis-meta-value">85.55</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Decision</div>
-            <div class="thesis-meta-value">Hold</div>
-          </div>
-        </div>
+        <span class="thesis-badge badge-buy">HIGH CONVICTION</span>
       </div>
-
-      <!-- CRDO -->
-      <div class="thesis-card">
-        <div class="thesis-header">
-          <div>
-            <div class="thesis-ticker">CRDO</div>
-            <div class="thesis-name">Credo Technology Group — Technology</div>
-          </div>
-          <span class="thesis-badge badge-watch">WATCH · 68.41</span>
-        </div>
-        <div class="thesis-body">
-          Credo Technology makes high-speed connectivity solutions for AI data centers, including active electrical cables (AECs) that compete favorably against both copper and optical alternatives at short-to-medium rack distances. The position was initiated when the stock was in a significant downtrend despite strong fundamental characteristics — a setup that favored asymmetric upside. The original thesis has played out: the stock has since moved to all-time highs and generated substantial realized gains through active position management. The remaining open position (3 shares, ~4.8% of portfolio) is held for continued AI infrastructure buildout exposure. A recent NVIDIA investment validates CRDO's competitive positioning. The primary GVR risk flag is the revisions score (58.5) — 3 analysts downgraded in the last 30 days with 0 upgrades, which bears monitoring as the stock trades at all-time highs with a 106x trailing P/E.
-        </div>
-        <div class="thesis-meta">
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">GVR Score</div>
-            <div class="thesis-meta-value">68.41 — WATCH</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Valuation</div>
-            <div class="thesis-meta-value">50.9</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Growth</div>
-            <div class="thesis-meta-value">86.53</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Profitability</div>
-            <div class="thesis-meta-value">77.7</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Revisions</div>
-            <div class="thesis-meta-value">58.5 ⚠</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Decision</div>
-            <div class="thesis-meta-value">Hold — trimmed Friday</div>
-          </div>
-        </div>
+      <div class="thesis-body">
+        <p style="margin-bottom:1rem;">Options are reserved for the highest-conviction setups in the portfolio — situations where the asymmetric risk/reward profile justifies the leverage and time-decay risk that comes with a contract. Both current options positions were entered based on deep fundamental research and clearly defined catalysts, not speculation for its own sake.</p>
+        <p style="margin-bottom:1rem;"><strong style="color:var(--white)">ServiceNow (NOW — Oct 16, 2026 $100 Call):</strong> The thesis on ServiceNow was built on a contrarian read of the so-called "SaaSpocalypse" — the broad market panic that AI would disrupt enterprise software companies. The analysis reached the opposite conclusion: ServiceNow is an AI beneficiary, not a victim. The company's agentic AI product suite (Now Assist) is accelerating, with enterprise customers spending over $1M in ACV growing more than 130% year-over-year. Q1 2026 subscription revenues hit $3.67 billion, up 22% YoY, beating the high end of guidance across every metric. Current remaining performance obligations — essentially contracted future revenue — came in at $12.64 billion, up 22.5% YoY, providing exceptional forward visibility. At the time of entry, NOW had lost over 50% from its 52-week highs and was trading at a compressed forward P/E of ~21.88x versus a 5-year historical mean of 63x — a historic valuation dislocation. A double-bottom technical pattern in April 2026 provided the entry signal. Jensen Huang's co-sign of ServiceNow's AI positioning at the Knowledge 2026 conference served as an additional institutional validation. The $100 call with an October 2026 expiration provides ample runway for the re-rating thesis to play out, with a bull-case price target of $234 implying substantial remaining upside from current levels.</p>
+        <p><strong style="color:var(--white)">Ondas Holdings (ONDS — Dec 18, 2026 $9 Call):</strong> The ONDS thesis is built on genuine operational momentum that the market has been slow to recognize. The company posted Q1 2026 revenue growth of approximately 10x year-over-year, with gross margins expanding to 49% — a remarkable transformation for a company this size. Ondas operates across two high-growth verticals: autonomous industrial drones (American Robotics subsidiary) and next-generation rail safety technology (Ondas Networks), both of which benefit from secular tailwinds in infrastructure modernization and defense-adjacent autonomous systems. The stock had been significantly dislocated from its operational performance due to early-stage company dynamics and thin institutional coverage — exactly the kind of asymmetric setup that options structures are designed for. The December 2026 expiration provides a long enough runway to allow the operational story to be more fully reflected in the share price.</p>
       </div>
-
-      <!-- CLS -->
-      <div class="thesis-card">
-        <div class="thesis-header">
-          <div>
-            <div class="thesis-ticker">CLS</div>
-            <div class="thesis-name">Celestica Inc. — Technology (Contract Manufacturing)</div>
-          </div>
-          <span class="thesis-badge badge-watch">WATCH · 66.46</span>
-        </div>
-        <div class="thesis-body">
-          Celestica is a contract electronics manufacturer serving hyperscale data center clients, building the physical hardware infrastructure for AI compute. The position was initiated on a technical setup — the stock was consolidating in a bullish flag pattern after a strong multi-month run, bouncing off a rising 200-day moving average. The AI infrastructure thesis is intact: Celestica builds server enclosures, compute modules, and networking hardware for the same data center build-out driving CRDO and NVDA. GVR growth score of 82.25 reflects real operational momentum: revenue +36.9%, EPS +139%, FCF +74.5% YoY. The standout metric is the revisions score of 88.25 — 45 analyst upgrades with 0 downgrades in the past 30 days, the strongest institutional conviction signal of any current holding. The profitability score (39.85) is suppressed by comparison against software-company benchmarks — Celestica's 11.6% gross margin is appropriate for contract manufacturing and not a fundamental concern.
-        </div>
-        <div class="thesis-meta">
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">GVR Score</div>
-            <div class="thesis-meta-value">66.46 — WATCH</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Valuation</div>
-            <div class="thesis-meta-value">55.5</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Growth</div>
-            <div class="thesis-meta-value">82.25</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Profitability</div>
-            <div class="thesis-meta-value">39.85*</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Revisions</div>
-            <div class="thesis-meta-value">88.25 ✓</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Decision</div>
-            <div class="thesis-meta-value">Hold</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CLSK -->
-      <div class="thesis-card">
-        <div class="thesis-header">
-          <div>
-            <div class="thesis-ticker">CLSK</div>
-            <div class="thesis-name">CleanSpark Inc. — Bitcoin Mining</div>
-          </div>
-          <span class="thesis-badge badge-watch">PARTIAL · 37.27</span>
-        </div>
-        <div class="thesis-body">
-          CleanSpark is a Bitcoin mining company. The position was initiated following analysis of a high-conviction fund manager's 13F filing. Note: GVR currently misclassifies CLSK as a financial sector company due to an Alpha Vantage sector mapping issue, resulting in a partial score. A proper GVR score is pending a sector mapping fix. The position is held speculatively pending further analysis and a corrected GVR score.
-        </div>
-        <div class="thesis-meta">
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">GVR Score</div>
-            <div class="thesis-meta-value">37.27 — PARTIAL</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Growth</div>
-            <div class="thesis-meta-value">46.53</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Revisions</div>
-            <div class="thesis-meta-value">28.0</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Decision</div>
-            <div class="thesis-meta-value">Hold — pending rescore</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ASTI -->
-      <div class="thesis-card">
-        <div class="thesis-header">
-          <div>
-            <div class="thesis-ticker">ASTI</div>
-            <div class="thesis-name">Ascent Solar Technologies — Technology</div>
-          </div>
-          <span class="thesis-badge badge-avoid">AVOID · 23.96</span>
-        </div>
-        <div class="thesis-body">
-          Ascent Solar Technologies is a micro-cap solar technology company. GVR scoring returns an AVOID signal — the company has deeply negative margins across all metrics (gross margin -670%, operating margin -7,419%), revenue declined 81% YoY, and there is no meaningful earnings history to score against. The position is a small speculative allocation (~$400, &lt;3% of portfolio) based on a technical setup: the stock sold off aggressively, based for approximately one year, and has shown early signs of momentum recovery with multiple bounces off the 200-day moving average. This is treated as a lottery ticket — high risk, small position, no fundamental anchor. A pre-defined stop at a decisive close below the 200-day moving average will be used to manage downside.
-        </div>
-        <div class="thesis-meta">
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">GVR Score</div>
-            <div class="thesis-meta-value">23.96 — AVOID</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Position Size</div>
-            <div class="thesis-meta-value">~$400</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Type</div>
-            <div class="thesis-meta-value">Speculative / Technical</div>
-          </div>
-          <div class="thesis-meta-item">
-            <div class="thesis-meta-label">Decision</div>
-            <div class="thesis-meta-value">Hold — lottery ticket</div>
-          </div>
-        </div>
-      </div>
-
     </div>
 
-    <p style="margin-top:2rem;font-size:.75rem;color:var(--muted);">* CLS profitability score is benchmarked against software sector medians. As a contract manufacturer, CLS's gross margins (~11%) are appropriate for its business model. A planned industry-level benchmark update will correct this comparison.</p>
+    <!-- SECTION 2: EQUITY POSITIONS -->
+    <div class="thesis-section-label">Core Equity Positions — Factor-Driven Market Exposure</div>
+    <div class="thesis-card" style="margin-bottom:2rem;">
+      <div class="thesis-header">
+        <div>
+          <div class="thesis-ticker">Equity Holdings</div>
+          <div class="thesis-name">Growth · Valuation · Profitability · Revisions</div>
+        </div>
+        <span class="thesis-badge badge-watch">GVR SCORED</span>
+      </div>
+      <div class="thesis-body">
+        All equity positions in the portfolio are selected and monitored through the GVR scoring framework, which evaluates each holding across four equally weighted dimensions: Valuation (25%), Growth (25%), Profitability (25%), and Revisions (25%). The goal of these positions is not to swing for outsized single-stock returns, but to build diversified exposure to companies with favorable factor characteristics — stocks that are growing revenue and earnings, trading at reasonable valuations relative to their growth rates, demonstrating operational efficiency, and receiving positive estimate momentum from Wall Street analysts. Each individual equity position is sized at 5% or less of the total portfolio, which intentionally limits single-stock risk while still allowing meaningful participation in individual stock performance. The collective effect is a portfolio that tilts toward quality growth companies — primarily in technology and AI infrastructure — while maintaining enough diversification that no single holding can materially impair the portfolio. This is designed to generate alpha relative to a passive index through factor selection, without taking on the concentrated binary risk that comes with large single-stock bets. The options positions (above) serve as the high-octane layer on top of this stable base.
+      </div>
+    </div>
+
+    <!-- SECTION 3: OVERALL PHILOSOPHY -->
+    <div class="thesis-section-label">Overall Portfolio Philosophy</div>
+    <div class="thesis-card" style="margin-bottom:2rem;">
+      <div class="thesis-header">
+        <div>
+          <div class="thesis-ticker">GVR Framework</div>
+          <div class="thesis-name">Systematic · Transparent · Risk-Aware</div>
+        </div>
+        <span class="thesis-badge" style="background:rgba(74,158,255,0.15);color:#4a9eff;border:1px solid rgba(74,158,255,0.3);">PHILOSOPHY</span>
+      </div>
+      <div class="thesis-body">
+        The portfolio is structured as two complementary layers. The first is a systematically scored equity book — positions that are aligned with the GVR model's signals on valuation, growth, profitability, and analyst revisions — designed to provide broad exposure to growth-oriented companies with favorable fundamentals. No single equity position exceeds 5% of the portfolio, keeping individual stock risk contained. The second layer is a small number of high-conviction options positions, entered only when a specific, well-researched catalyst exists and the risk/reward profile is asymmetric. Options are not used speculatively across the board — they are reserved for situations where the research is deep, the thesis is clearly defined, and the leverage is justified by the opportunity. Together, the two layers are designed to do different things: the equity book provides compounding market exposure with a quality tilt, while the options positions provide leveraged upside on the highest-conviction ideas without risking the entire portfolio on any single outcome. All positions are tracked, scored, and documented publicly through this site as part of an ongoing commitment to transparency and accountability.
+      </div>
+    </div>
 
   </div>
-
   <div class="disclosure-banner">
     <strong>Disclosure:</strong> These are personal investment theses for informational purposes only. GVR scores are generated by a proprietary quantitative model and do not constitute investment recommendations. All investments involve risk. <a href="disclosures.html">Full disclosures →</a>
   </div>
-
   <footer class="footer">
     <span>© 2026 Golden Valley Research</span>
     <a href="disclosures.html">Disclosures</a>
   </footer>
-
   <script src="js/main.js"></script>
 </body>
 </html>
