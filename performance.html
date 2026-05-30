@@ -204,7 +204,8 @@
       "2026-05-20": 681.57, "2026-05-21": 682.84, "2026-05-22": 685.55,
       "2026-05-26": 690.01,
       "2026-05-27": 689.96,
-      "2026-05-28": 693.91
+      "2026-05-28": 693.91,
+      "2026-05-28": 695.49
       // ← ADD NEW VOO ENTRIES HERE: "YYYY-MM-DD": price,
     };
     const qqqPrices = {
@@ -267,7 +268,8 @@
       "2026-05-20": 713.15, "2026-05-21": 714.51, "2026-05-22": 717.54,
       "2026-05-26": 730.28,
       "2026-05-27": 729.45,
-      "2026-05-28": 735.6
+      "2026-05-28": 735.6,
+      "2026-05-28": 738.31
       // ← ADD NEW QQQ ENTRIES HERE: "YYYY-MM-DD": price,
     };
 
@@ -282,17 +284,13 @@
       if (data.length < 2) return null;
       const end = data[data.length - 1];
       const start = data[Math.max(0, data.length - 1 - lookback)];
-      const endIdx = 100 + end.cum_return;
-      const startIdx = 100 + start.cum_return;
-      return (endIdx - startIdx) / startIdx * 100;
+      return end.cum_return - start.cum_return;
     }
     function ytdPct(data) {
       const lastOf2025 = [...data].reverse().find(d => d.date <= '2025-12-31');
       const latest = data[data.length - 1];
       if (!lastOf2025 || !latest || lastOf2025.date === latest.date) return null;
-      const base = 100 + lastOf2025.cum_return;
-      const curr = 100 + latest.cum_return;
-      return (curr - base) / base * 100;
+      return latest.cum_return - lastOf2025.cum_return;
     }
     function benchmarkForSlice(dates, priceMap) {
       let basePrice = null;
@@ -304,10 +302,10 @@
     }
     function rebaseCumReturn(data) {
       if (!data.length) return data;
-      const startCum = 100 + data[0].cum_return;
+      const startCum = data[0].cum_return;
       return data.map((d, i) => ({
         ...d,
-        cum_return: i === 0 ? 0 : ((100 + d.cum_return) - startCum) / startCum * 100
+        cum_return: i === 0 ? 0 : d.cum_return - startCum
       }));
     }
     function buildChart(data) {
