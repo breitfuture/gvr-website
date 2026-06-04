@@ -12,6 +12,9 @@
       display: grid; grid-template-columns: repeat(4,1fr);
       gap: 1rem; margin-bottom: 2rem;
     }
+    @media (max-width: 600px) {
+      .port-summary { grid-template-columns: repeat(2, 1fr); }
+    }
     .port-sum-card {
       background: var(--navy-3); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 1.25rem;
@@ -122,13 +125,11 @@
     const fmtPct = v => v != null
       ? `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':''}${v.toFixed(2)}%</span>`
       : '—';
-
     fetch('data/portfolio.json')
       .then(r => r.json())
       .then(meta => {
         const positions = meta.positions;
         document.getElementById('last-updated').textContent = `As of ${meta.date} · ${meta.account}`;
-
         // Summary cards — sum all positions including cash for total value
         let totalValue = 0, totalGL = 0, totalToday = 0, count = 0;
         positions.forEach(p => {
@@ -137,13 +138,11 @@
           if (p.today_gl_dollar != null) totalToday += p.today_gl_dollar;
           if (p.symbol !== 'CASH') count++;
         });
-
         document.getElementById('sum-value').textContent =
           '$' + totalValue.toLocaleString('en-US', {minimumFractionDigits:2});
         document.getElementById('sum-gl').innerHTML = fmtChg$(totalGL);
         document.getElementById('sum-today').innerHTML = fmtChg$(totalToday);
         document.getElementById('sum-count').textContent = count;
-
         // Totals row — sum invested positions only (excl cash), straight column sums like Fidelity
         const invested = positions.filter(p => p.symbol !== 'CASH');
         let aggValue = 0, aggGL = 0, aggToday = 0, aggPct = 0, aggCost = 0;
@@ -156,7 +155,6 @@
         });
         const aggGLPct  = aggCost  > 0 ? (aggGL    / aggCost)            * 100 : null;
         const aggTdyPct = aggValue > 0 ? (aggToday / (aggValue - aggToday)) * 100 : null;
-
         // Render rows
         const tbody = document.getElementById('portfolio-tbody');
         const rows = positions.map(p => {
@@ -177,7 +175,6 @@
             <td>${p.pct_acct != null ? p.pct_acct.toFixed(2)+'%' : '—'}</td>
           </tr>`;
         }).join('');
-
         const totalsRow = `<tr class="totals-row">
           <td>Total</td>
           <td colspan="4" style="color:var(--muted);font-size:.75rem;font-weight:400;">Invested positions excl. cash</td>
@@ -188,7 +185,6 @@
           <td>${aggTdyPct != null ? fmtPct(aggTdyPct) : '—'}</td>
           <td>${aggPct.toFixed(2)}%</td>
         </tr>`;
-
         tbody.innerHTML = rows + totalsRow;
       })
       .catch(() => {

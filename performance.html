@@ -45,9 +45,6 @@
       color: var(--muted);
       margin-top: .2rem;
     }
-    @media (max-width: 600px) {
-      .dollar-growth-card { flex-direction: column; align-items: flex-start; }
-    }
   </style>
 </head>
 <body>
@@ -102,7 +99,6 @@
         <div class="perf-stat-value" id="s-inception">—</div>
       </div>
     </div>
-
     <!-- Dollar growth card -->
     <div class="dollar-growth-card">
       <div>
@@ -111,7 +107,6 @@
         <div class="dollar-growth-detail" id="s-dollar-growth-detail">—</div>
       </div>
     </div>
-
     <div class="chart-container">
       <div class="chart-header">
         <div>
@@ -210,7 +205,6 @@
       "2026-06-02": 698.26,
       "2026-06-03": 693.36,
       "2026-06-04": 696.06
-
       // ← ADD NEW VOO ENTRIES HERE: "YYYY-MM-DD": price,
     };
     const qqqPrices = {
@@ -278,11 +272,9 @@
       "2026-06-01": 742.74,
       "2026-06-02": 746.16,
       "2026-06-03": 744.21,
-      "2026-06-03": 740.61
-
+      "2026-06-04": 740.61
       // ← ADD NEW QQQ ENTRIES HERE: "YYYY-MM-DD": price,
     };
-
     let allData = [];
     let chart;
     const fmtPct = v => {
@@ -431,11 +423,9 @@
         allData = data;
         const first = data[0];
         const last = data[data.length - 1];
-
         // Balance
         document.getElementById('s-balance').innerHTML =
           `$${last.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
-
         // Pct stats
         const stats = [
           ['s-1d',        last.pct_change],
@@ -450,7 +440,6 @@
             el.innerHTML = `<span class="${colorClass(val)}">${fmtPct(val)}</span>`;
           }
         });
-
         // ─────────────────────────────────────────────────────────────────
         // DOLLAR INVESTMENT GAIN SINCE INCEPTION OF ACTIVE MANAGEMENT
         //
@@ -475,9 +464,7 @@
           { date: "2026-01-20", amount: 500.00   },
           { date: "2026-02-13", amount: 500.00   },
           { date: "2026-03-20", amount: 200.00   },
-
           { date: "2026-04-01", amount: 300.00   },
-
           // ← ADD NEW CONTRIBUTIONS HERE: { date: "YYYY-MM-DD", amount: 000.00 },
         ];
         // ─────────────────────────────────────────────────────────────────
@@ -490,7 +477,6 @@
         growthEl.innerHTML = `<span class="${dollarGrowth >= 0 ? 'pos' : 'neg'}">${sign}$${absGrowth}</span>`;
         document.getElementById('s-dollar-growth-detail').textContent =
           `Cost basis $${costBasis.toLocaleString('en-US', { minimumFractionDigits: 2 })} (inception $${inceptionBalance.toLocaleString('en-US',{minimumFractionDigits:2})} + $${totalContributions.toLocaleString('en-US',{minimumFractionDigits:2})} contributions) · Current balance $${last.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })} as of ${last.date}`;
-
         buildChart(data);
       });
   </script>
