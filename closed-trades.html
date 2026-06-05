@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Closed Trades — Golden Valley Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .week-group { margin-bottom: 2.5rem; }
+    .week-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 1rem 1.5rem;
+      background: var(--navy-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      user-select: none;
+      transition: border-color 0.2s;
+    }
+    .week-header:hover { border-color: var(--gold); }
+    .week-header-left { display: flex; align-items: center; gap: 1.25rem; }
+    .week-label {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .week-meta {
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .week-summary-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .trade-badge {
+      font-size: .65rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .25rem .6rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    .trade-badge-win {
+      background: rgba(76,175,125,0.15);
+      color: #4caf7d;
+      border: 1px solid rgba(76,175,125,0.3);
+    }
+    .trade-badge-loss {
+      background: rgba(224,92,92,0.15);
+      color: #e05c5c;
+      border: 1px solid rgba(224,92,92,0.3);
+    }
+    .chevron {
+      color: var(--gold);
+      font-size: 1rem;
+      transition: transform 0.25s;
+    }
+    .week-group.open .chevron { transform: rotate(180deg); }
+    .week-content {
+      display: none;
+      padding-top: 1rem;
+    }
+    .week-group.open .week-content { display: block; }
+    .trade-card {
+      background: var(--navy-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.25rem;
+    }
+    .trade-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      gap: 1rem;
+    }
+    .trade-ticker {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: .3rem;
+    }
+    .trade-name {
+      font-size: .8rem;
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
+    .trade-result {
+      text-align: right;
+    }
+    .trade-result-value {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    .trade-result-pct {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-top: .15rem;
+    }
+    .trade-stats {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .trade-stat-item { min-width: 90px; }
+    .trade-stat-label {
+      font-size: .65rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .25rem;
+    }
+    .trade-stat-value {
+      font-size: .9rem;
+      color: var(--white);
+      font-weight: 500;
+    }
+    .trade-body p {
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.8;
+      margin-bottom: .9rem;
+    }
+    .trade-body p:last-child { margin-bottom: 0; }
+    .trade-body strong { color: var(--white); }
+    .trade-section-label {
+      font-size: .65rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .5rem;
+      margin-top: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <svg class="nav-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 3 L54 15 L54 38 Q54 52 30 58 Q6 52 6 38 L6 15 Z" fill="#0d1117" stroke="#c9a84c" stroke-width="1.5"/>
+        <path d="M30 7 L50 17.5 L50 37 Q50 49 30 54 Q10 49 10 37 L10 17.5 Z" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+        <text x="30" y="32" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#c9a84c" text-anchor="middle">GV9</text>
+        <polyline points="16,40 22,33 27,37 34,27 40,30 46,22" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+      </svg>
+      <span class="nav-name">Golden Valley Research</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="performance.html">Performance</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="thesis.html">Thesis</a></li>
+      <li><a href="newsletter.html">Newsletter</a></li>
+      <li><a href="closed-trades.html" class="active">Closed Trades</a></li>
+      <li><a href="disclosures.html" class="nav-disclosures">Disclosures</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+  </nav>
+  <div class="page-header">
+    <h1>Closed Trades</h1>
+    <p>A running journal of completed positions — entry thesis, exit rationale, and performance</p>
+  </div>
+  <div class="page-content">
+
+    <!-- WEEK: JUNE 1–5, 2026 -->
+    <div class="week-group open" id="week-2026-06-01">
+      <div class="week-header" onclick="toggleWeek('week-2026-06-01')">
+        <div class="week-header-left">
+          <div>
+            <div class="week-label">Week of June 1 – June 5, 2026</div>
+            <div class="week-meta">1 closed trade</div>
+          </div>
+          <div class="week-summary-badges">
+            <span class="trade-badge trade-badge-win">ZETA +$295.67</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="week-content">
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">ZETA</div>
+              <div class="trade-name">Zeta Global Holdings Corp. Class A · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value pos">+$295.67</div>
+              <div class="trade-result-pct">+~30% · 7 trading days</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">May 18 &amp; May 26, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Date</div>
+              <div class="trade-stat-value">June 2, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">40 total (2 lots of 20)</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Avg Cost</div>
+              <div class="trade-stat-value">$18.44/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Price</div>
+              <div class="trade-stat-value">$25.83/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Cost Basis</div>
+              <div class="trade-stat-value">$737.50</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Proceeds</div>
+              <div class="trade-stat-value">$1,033.17</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Reason</div>
+              <div class="trade-stat-value">Take Profit</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Entry Thesis</div>
+            <p>ZETA was identified as a mispriced AI marketing platform trading at a valuation still anchored to its legacy perception as an ad-tech company. The Seeking Alpha research at the time of entry made a compelling case that the market was missing a fundamental transformation underway: Zeta had launched Athena, a native AI layer built directly into the core marketing execution workflow — not bolted on top of it. Within one week of launch, Athena had generated 7x the agentic interactions and accounted for 60% of all platform AI activity, signaling rapid enterprise adoption. The Q1 2026 numbers backing this thesis were hard to ignore: revenue surged 50% year-over-year to $396 million, adjusted EBITDA climbed 42% to $66 million, and super-scaled customers grew 19% to 189 with ARPU jumping 21% to approximately $1.7 million. The organic growth rate, stripped of acquisitions and political revenue, was still running at 29%. At the time of entry, ZETA was trading below 17x forward earnings despite targeting over $2.3 billion in revenue and 25% EBITDA margins by 2028 — a clear valuation disconnect relative to the growth and profitability trajectory. Management's guidance toward positive GAAP EPS in 2026 was an additional catalyst, as it would open the stock to a broader institutional investor base that screens out GAAP-loss companies. The setup was a straightforward swing trade: a fundamentally improving business with a clear near-term re-rating catalyst, trading at a compressed multiple due to lingering short-seller sentiment and legacy misperception.</p>
+            <div class="trade-section-label">Exit Rationale &amp; Reflection</div>
+            <p>The position was exited on June 2, 2026 for a gain of <strong>$295.67 — approximately 30% in under two weeks</strong>. The exit was a disciplined take-profit decision: the position had reached a reasonable target return in a short timeframe and the broader market was showing signs of volatility heading into the NFP report on June 6. Locking in gains before a potentially market-moving macro event was the prudent move. In hindsight, given the significant Friday selloff that followed the jobs report, the timing proved to be even better than it looked at the moment of exit. The ZETA trade is a clean example of the swing trading discipline the GVR equity book is built on — identify a mispriced setup with a clear catalyst, size appropriately, and take profits when the thesis has played out rather than holding through unrelated macro risk.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FUTURE WEEKS WILL BE ADDED ABOVE THIS COMMENT -->
+
+  </div>
+  <div class="disclosure-banner">
+    <strong>Disclosure:</strong> Closed trade journal is for informational and educational purposes only. Past performance does not guarantee future results. Not investment advice. <a href="disclosures.html">Full disclosures →</a>
+  </div>
+  <footer class="footer">
+    <span>© 2026 Golden Valley Research</span>
+    <a href="disclosures.html">Disclosures</a>
+  </footer>
+  <script src="js/main.js"></script>
+  <script>
+    function toggleWeek(id) {
+      const group = document.getElementById(id);
+      group.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
