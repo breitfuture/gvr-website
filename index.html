@@ -107,24 +107,28 @@
         const fmtPct = v => v >= 0
           ? `<span class="pos">+${v.toFixed(2)}%</span>`
           : `<span class="neg">${v.toFixed(2)}%</span>`;
+
+        // Sum the most recent N days of pct_change
+        const sumPct = (data, days) => {
+          const slice = data.slice(-days);
+          return slice.reduce((sum, d) => sum + (d.pct_change || 0), 0);
+        };
+
+        // YTD: sum all pct_change values from Jan 1 onwards
+        const ytdPct = data => {
+          return data
+            .filter(d => d.date >= '2026-01-01')
+            .reduce((sum, d) => sum + (d.pct_change || 0), 0);
+        };
+
         document.getElementById('val-balance').innerHTML =
           `$${last.balance.toLocaleString('en-US', {minimumFractionDigits:2})}`;
         document.getElementById('val-inception').innerHTML = fmtPct(last.cum_return);
-        const calcCumPct = (data, lookback) => {
-          const end = data[data.length - 1];
-          const start = data[Math.max(0, data.length - 1 - lookback)];
-          if (!start || start.cum_return === undefined) return null;
-          const endIdx = 100 + end.cum_return;
-          const startIdx = 100 + start.cum_return;
-          return (endIdx - startIdx) / startIdx * 100;
-        };
-        document.getElementById('val-1m').innerHTML = fmtPct(calcCumPct(data, 21));
-        document.getElementById('val-1w').innerHTML = fmtPct(calcCumPct(data, 5));
-        if (last.pct_change !== null) {
-          document.getElementById('val-1d').innerHTML = fmtPct(last.pct_change);
-        }
-        // Last updated: format the most recent date entry
-        const rawDate = last.date; // e.g. "2026-05-26"
+        document.getElementById('val-1m').innerHTML  = fmtPct(sumPct(data, 21));
+        document.getElementById('val-1w').innerHTML  = fmtPct(sumPct(data, 5));
+        document.getElementById('val-1d').innerHTML  = fmtPct(last.pct_change);
+
+        const rawDate = last.date;
         const d = new Date(rawDate + 'T12:00:00');
         const formatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         document.getElementById('val-last-updated').textContent = formatted;

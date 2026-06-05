@@ -72,7 +72,6 @@
     <p>Roth IRA · Inception of Active Management September 18, 2025 · Investment returns only — cash deposits excluded</p>
   </div>
   <div class="page-content">
-    <!-- Single-row stats: Balance, Today, 1W, 1M, YTD, Since Inception -->
     <div class="perf-stats-grid">
       <div class="perf-stat">
         <div class="perf-stat-label">Balance</div>
@@ -99,7 +98,6 @@
         <div class="perf-stat-value" id="s-inception">—</div>
       </div>
     </div>
-    <!-- Dollar growth card -->
     <div class="dollar-growth-card">
       <div>
         <div class="dollar-growth-label">Investment Growth Since Inception of Active Management (9/18/25)</div>
@@ -197,15 +195,9 @@
       "2026-05-12": 678.67, "2026-05-13": 682.41, "2026-05-14": 687.73,
       "2026-05-15": 679.44, "2026-05-18": 678.91, "2026-05-19": 674.59,
       "2026-05-20": 681.57, "2026-05-21": 682.84, "2026-05-22": 685.55,
-      "2026-05-26": 690.01,
-      "2026-05-27": 689.96,
-      "2026-05-28": 693.91,
-      "2026-05-29": 695.49,
-      "2026-06-01": 697.30,
-      "2026-06-02": 698.26,
-      "2026-06-03": 693.36,
-      "2026-06-04": 696.06,
-      "2026-06-05": 678.00
+      "2026-05-26": 690.01, "2026-05-27": 689.96, "2026-05-28": 693.91,
+      "2026-05-29": 695.49, "2026-06-01": 697.30, "2026-06-02": 698.26,
+      "2026-06-03": 693.36, "2026-06-04": 696.06, "2026-06-05": 678.00
       // ← ADD NEW VOO ENTRIES HERE: "YYYY-MM-DD": price,
     };
     const qqqPrices = {
@@ -266,15 +258,9 @@
       "2026-05-12": 707.24, "2026-05-13": 714.71, "2026-05-14": 719.79,
       "2026-05-15": 708.93, "2026-05-18": 705.88, "2026-05-19": 701.53,
       "2026-05-20": 713.15, "2026-05-21": 714.51, "2026-05-22": 717.54,
-      "2026-05-26": 730.28,
-      "2026-05-27": 729.45,
-      "2026-05-28": 735.6,
-      "2026-05-29": 738.31,
-      "2026-06-01": 742.74,
-      "2026-06-02": 746.16,
-      "2026-06-03": 744.21,
-      "2026-06-04": 740.61,
-      "2026-06-05": 705.06
+      "2026-05-26": 730.28, "2026-05-27": 729.45, "2026-05-28": 735.6,
+      "2026-05-29": 738.31, "2026-06-01": 742.74, "2026-06-02": 746.16,
+      "2026-06-03": 744.21, "2026-06-04": 740.61, "2026-06-05": 705.06
       // ← ADD NEW QQQ ENTRIES HERE: "YYYY-MM-DD": price,
     };
     let allData = [];
@@ -284,17 +270,14 @@
       return (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
     };
     const colorClass = v => v === null ? '' : (v >= 0 ? 'pos' : 'neg');
-    function slicePct(data, lookback) {
-      if (data.length < 2) return null;
-      const end = data[data.length - 1];
-      const start = data[Math.max(0, data.length - 1 - lookback)];
-      return end.cum_return - start.cum_return;
+    // Sum the most recent N days of pct_change
+    function sumPct(data, days) {
+      return data.slice(-days).reduce((sum, d) => sum + (d.pct_change || 0), 0);
     }
     function ytdPct(data) {
-      const lastOf2025 = [...data].reverse().find(d => d.date <= '2025-12-31');
-      const latest = data[data.length - 1];
-      if (!lastOf2025 || !latest || lastOf2025.date === latest.date) return null;
-      return latest.cum_return - lastOf2025.cum_return;
+      return data
+        .filter(d => d.date >= '2026-01-01')
+        .reduce((sum, d) => sum + (d.pct_change || 0), 0);
     }
     function benchmarkForSlice(dates, priceMap) {
       let basePrice = null;
@@ -423,16 +406,13 @@
       .then(r => r.json())
       .then(data => {
         allData = data;
-        const first = data[0];
         const last = data[data.length - 1];
-        // Balance
         document.getElementById('s-balance').innerHTML =
           `$${last.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
-        // Pct stats
         const stats = [
           ['s-1d',        last.pct_change],
-          ['s-1w',        slicePct(data, 5)],
-          ['s-1m',        slicePct(data, 21)],
+          ['s-1w',        sumPct(data, 5)],
+          ['s-1m',        sumPct(data, 21)],
           ['s-ytd',       ytdPct(data)],
           ['s-inception', last.cum_return],
         ];
@@ -442,21 +422,7 @@
             el.innerHTML = `<span class="${colorClass(val)}">${fmtPct(val)}</span>`;
           }
         });
-        // ─────────────────────────────────────────────────────────────────
-        // DOLLAR INVESTMENT GAIN SINCE INCEPTION OF ACTIVE MANAGEMENT
-        //
-        // Formula: Current Balance − (Starting Balance + All Contributions)
-        //
-        // HOW TO UPDATE:
-        //   1. When you add a new deposit, add it to the contributions array below.
-        //   2. Each entry: { date: "YYYY-MM-DD", amount: 000.00 }
-        //   3. The gain will auto-update once you've also updated the balance
-        //      in performance.json with that day's new balance entry.
-        //
-        // Starting balance at inception of active management (9/18/2025):
         const inceptionBalance = 4653.00;
-        //
-        // All cash contributions since inception:
         const contributions = [
           { date: "2025-09-30", amount: 500.00   },
           { date: "2025-10-06", amount: 500.00   },
@@ -469,7 +435,6 @@
           { date: "2026-04-01", amount: 300.00   },
           // ← ADD NEW CONTRIBUTIONS HERE: { date: "YYYY-MM-DD", amount: 000.00 },
         ];
-        // ─────────────────────────────────────────────────────────────────
         const totalContributions = contributions.reduce((sum, c) => sum + c.amount, 0);
         const costBasis = inceptionBalance + totalContributions;
         const dollarGrowth = last.balance - costBasis;
