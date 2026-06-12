@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Issue #4 — Golden Valley Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .article-wrap { max-width: 740px; }
+    .article-date {
+      font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .article-title {
+      font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; line-height: 1.15; color: var(--white);
+      margin-bottom: 2rem; padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-body h2 {
+      font-family: var(--font-display); font-size: 1.4rem;
+      color: var(--gold); margin: 2rem 0 .75rem;
+    }
+    .article-body p {
+      color: var(--muted); font-size: .95rem; line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+    .article-body strong { color: var(--white); }
+    .perf-row {
+      display: flex; gap: 1rem; margin: 1.5rem 0; flex-wrap: wrap;
+    }
+    .perf-box {
+      flex: 1; min-width: 140px;
+      background: var(--navy-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.25rem;
+    }
+    .perf-box-label {
+      font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: .4rem;
+    }
+    .perf-box-value {
+      font-family: var(--font-display); font-size: 1.6rem; font-weight: 600;
+    }
+    .perf-box-value.pos { color: #4caf7d; }
+    .perf-box-value.neg { color: #e05c5c; }
+    .back-link {
+      display: inline-block; margin-bottom: 2rem;
+      font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <svg class="nav-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 3 L54 15 L54 38 Q54 52 30 58 Q6 52 6 38 L6 15 Z" fill="#0d1117" stroke="#c9a84c" stroke-width="1.5"/>
+        <path d="M30 7 L50 17.5 L50 37 Q50 49 30 54 Q10 49 10 37 L10 17.5 Z" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+        <text x="30" y="32" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#c9a84c" text-anchor="middle">GV9</text>
+        <polyline points="16,40 22,33 27,37 34,27 40,30 46,22" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+      </svg>
+      <span class="nav-name">Golden Valley Research</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="performance.html">Performance</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="thesis.html">Thesis</a></li>
+      <li><a href="newsletter.html" class="active">Newsletter</a></li>
+      <li><a href="closed-trades.html">Closed Trades</a></li>
+      <li><a href="disclosures.html" class="nav-disclosures">Disclosures</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+  </nav>
+  <div class="page-header">
+    <h1>Newsletter</h1>
+    <p>Issue #4 — June 12, 2026</p>
+  </div>
+  <div class="page-content">
+    <div class="article-wrap">
+      <a href="newsletter.html" class="back-link">← Back to newsletter</a>
+      <div class="article-date">June 12, 2026 — Issue #4</div>
+      <div class="article-title">A Quieter Week of Repositioning While the Options Book Consolidates and the Market Grinds Higher Without Us</div>
+      <div class="article-body">
+        <h2>Weekly Performance</h2>
+        <p>The GVR portfolio fell <strong>-4.63%</strong> on the week, while the broad market moved in the opposite direction — VOO gained <strong>+0.58%</strong> and QQQ rose <strong>+2.31%</strong>. This marks a second consecutive week of underperformance relative to the indexes, and the driver is the same one flagged last issue: the NOW and ONDS options positions, which together represent a meaningful share of the portfolio, continued to drift lower even as broader equities firmed up.</p>
+        <div class="perf-row">
+          <div class="perf-box">
+            <div class="perf-box-label">GVR Portfolio</div>
+            <div class="perf-box-value neg">-4.63%</div>
+          </div>
+          <div class="perf-box">
+            <div class="perf-box-label">QQQ (Nasdaq)</div>
+            <div class="perf-box-value pos">+2.31%</div>
+          </div>
+          <div class="perf-box">
+            <div class="perf-box-label">VOO (S&P 500)</div>
+            <div class="perf-box-value pos">+0.58%</div>
+          </div>
+        </div>
+        <p>Cumulative return since inception now sits at <strong>+51.57%</strong>. Two rough weeks in a row have taken a real bite out of what was a much larger lead a few weeks ago, and that is worth sitting with honestly rather than glossing over. The options book is doing exactly what concentrated, long-dated calls do during a multi-week pullback in the underlying names — it amplifies the drawdown. The flip side of that coin is what happened in mid-to-late May, and the bet here continues to be that the same mechanism works in reverse once these names find their footing.</p>
+        <h2>What Happened in Markets This Week</h2>
+        <p>This was a calmer week than the jobs-data shock of the prior Friday, but calm did not mean directionless — it meant a slow grind higher for the broad market as some of last week's rate-hike anxiety partially unwound. Treasury yields, which spiked sharply after the blowout May payrolls report, eased back modestly through the week as a handful of softer inflation-adjacent datapoints gave investors a reason to believe the Fed's hands aren't being forced just yet. That modest relief on the rates front was enough to put a bid under the Nasdaq in particular, with mega-cap tech and semiconductor names leading the index higher.</p>
+        <p>Energy and commodity markets were a notable storyline of the week. Headlines pointing toward renewed diplomatic engagement between the U.S. and Iran put downward pressure on crude oil prices, as markets began pricing out some of the geopolitical risk premium that had been embedded since the conflict escalated. WTI pulled back from recent highs, and the move rippled through energy-sector equities — a dynamic directly relevant to the SM Energy and Marathon Petroleum exits documented in this week's closed trades. Whether this diplomatic thaw holds remains to be seen, but markets tend to move on the probability of an outcome well before the outcome itself is confirmed, and the message from price action this week was clear.</p>
+        <p>On the software and AI side, the picture was more mixed than the headline Nasdaq gain would suggest. While mega-cap AI infrastructure names (chips, cloud, hyperscalers) participated in the rally, a number of high-multiple SaaS and enterprise software names — including some that had been hit hard the prior week — continued to struggle to find a bottom. ServiceNow was among the names still working through this digestion period, with shares giving back additional ground before stabilizing late in the week. The broader narrative of "AI infrastructure good, AI-adjacent software still finding its level" continued to play out, and it's a dynamic worth watching closely given the portfolio's exposure to that exact theme through the NOW position.</p>
+        <p>Looking ahead, the macro calendar lightens somewhat next week, which could allow individual stock stories and sector rotation to drive price action more than top-down macro surprises. A continuation of the "rates ease, tech breathes" dynamic would be constructive for the options book specifically, though one calm week of consolidation after a sharp two-week pullback is not yet enough to call a bottom — just a reason for cautious optimism.</p>
+        <h2>Options Book: Consolidation, Not Capitulation</h2>
+        <p>Both the ServiceNow October 2026 $100 call and the Ondas December 2026 $9 call continued to decline this week, extending the pullback from two weeks ago. The encouraging development is that both appear to be consolidating rather than breaking down further — price action in both NOW and ONDS has flattened out after the sharp drop, which is often what basing looks like before a name attempts to find a bottom and stabilize. Neither position has done anything to change the underlying thesis: ServiceNow's AI workflow positioning and contracted revenue base, and Ondas's drone infrastructure and government customer pipeline, remain intact regardless of where the stocks trade week to week.</p>
+        <p>Honestly, the instinct here is to add to both positions on this weakness — buying more exposure to a thesis you still believe in, at a better price than you got it the first time, is exactly the kind of decision that tends to look good in hindsight. The hesitation is concentration risk: these two positions already represent a large share of the total options book and, by extension, the portfolio. Adding more doubles down on a bet that is already sized aggressively. That tension is being sat with rather than resolved hastily. Early next week is the likely window for a decision on adding exposure to one or both names — and whatever happens will be documented here either way, win or lose.</p>
+        <h2>Equity Book: Trimming Winners, Rotating Into New Setups</h2>
+        <p>This was an active week of repositioning on the equity side. Three positions were trimmed and closed out — full details are in the <a href="closed-trades.html" style="color: var(--gold);">Closed Trades</a> section. SM Energy and Marathon Petroleum were both closed for gains as the Iran-related oil premium began to fade (a thesis discussed above in the market wrap), and Symbotic was cut for a loss after the technical support level the position was built on broke down, with the fundamental picture — thin margins, inconsistent earnings — no longer justifying patience.</p>
+        <p>On the buy side, several new names were added. URAA, a 2x leveraged uranium-industry ETF, was added as a way to get more direct exposure to the nuclear/uranium thematic that's been a slower-burning but persistent narrative this year. CIEN (Ciena) was bought on weakness — Ciena was added to the S&P 500 earlier this year, and the optical networking/AI infrastructure connectivity story fits well with the broader portfolio's AI exposure, while giving some diversification away from the pure-software names that have been under pressure. Positions in PLTR, SOFI, and BWXT were also added this week, adding to existing exposure in names that have been performing well and where the thesis remains intact.</p>
+        <p>Taken together, the week's activity reflects a deliberate shift: take profits where the catalyst has played out or the macro backdrop has changed (oil/Iran), cut losses where the technical and fundamental picture has deteriorated (SYM), and rotate that capital into a mix of thematic diversification (URAA, CIEN) and conviction adds to existing winners (PLTR, SOFI, BWXT). The portfolio's headline number this week is disappointing, but the underlying portfolio construction work happening beneath the surface is exactly the kind of housekeeping that should pay off over a longer horizon.</p>
+      </div>
+    </div>
+  </div>
+  <div class="disclosure-banner">
+    <strong>Disclosure:</strong> This newsletter is for informational purposes only. Not investment advice. The author holds positions in NOW calls, ONDS calls, ALC calls, and various equity positions. Portfolio inception date September 18, 2025. <a href="disclosures.html">Full disclosures →</a>
+  </div>
+  <footer class="footer">
+    <span>© 2026 Golden Valley Research</span>
+    <a href="disclosures.html">Disclosures</a>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
