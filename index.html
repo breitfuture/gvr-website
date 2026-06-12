@@ -9,13 +9,39 @@
   <link rel="stylesheet" href="css/main.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
-    .hero-content { display: flex; gap: 2.5rem; align-items: flex-start; flex-wrap: wrap; }
-    .hero-text { flex: 1 1 420px; min-width: 0; }
-    .hero-chart-panel { flex: 1 1 380px; min-width: 320px; background: var(--navy-3); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
-    .hero-title { font-size: clamp(2.1rem, 4vw, 3.2rem) !important; line-height: 1.1; }
+    .hero-content {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      gap: 2.5rem;
+      align-items: flex-start;
+      max-width: 100% !important;
+      width: 100%;
+    }
+    .hero-text {
+      flex: 1 1 50%;
+      min-width: 0;
+      max-width: 680px;
+    }
+    .hero-chart-panel {
+      flex: 1 1 50%;
+      min-width: 320px;
+      background: var(--navy-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      align-self: stretch;
+    }
+    .hero-title {
+      font-size: clamp(2.1rem, 4vw, 3.2rem) !important;
+      line-height: 1.1;
+    }
     .hero-range-toggle { margin-top: .75rem; }
     @media (max-width: 900px) {
-      .hero-content { flex-direction: column; }
+      .hero-content {
+        flex-direction: column !important;
+        flex-wrap: wrap !important;
+      }
       .hero-chart-panel { width: 100%; }
     }
   </style>
@@ -127,14 +153,10 @@
         label = 'Account Balance';
         titleText = 'Account Balance';
       } else {
-        const contribMap = {};
-        homeContrib.contributions.forEach(c => contribMap[c.date] = c.amount);
         let cum = 0;
         dataset = slice.map((d, i) => {
           if (i === 0) return 0;
-          const dc = d.dollar_change || 0;
-          const contrib = contribMap[d.date] || 0;
-          cum += (dc - contrib);
+          cum += (d.dollar_change || 0);
           return cum;
         });
         label = 'Investment Gains';
