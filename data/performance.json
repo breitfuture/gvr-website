@@ -884,407 +884,407 @@
   {
     "date": "2026-03-20",
     "balance": 9760.0,
-    "dollar_change": -177.0,
-    "pct_change": -1.7812,
-    "cum_return": 11.0948
+    "dollar_change": -377.0,
+    "pct_change": -3.7939,
+    "cum_return": 8.8183
   },
   {
     "date": "2026-03-23",
     "balance": 9933.0,
     "dollar_change": 173.0,
     "pct_change": 1.7725,
-    "cum_return": 13.064
+    "cum_return": 10.7471
   },
   {
     "date": "2026-03-24",
     "balance": 10024.0,
     "dollar_change": 91.0,
     "pct_change": 0.9161,
-    "cum_return": 14.0998
+    "cum_return": 11.7616
   },
   {
     "date": "2026-03-25",
     "balance": 10076.0,
     "dollar_change": 52.0,
     "pct_change": 0.5188,
-    "cum_return": 14.6917
+    "cum_return": 12.3414
   },
   {
     "date": "2026-03-26",
     "balance": 9580.0,
     "dollar_change": -496.0,
     "pct_change": -4.9226,
-    "cum_return": 9.0459
+    "cum_return": 6.8113
   },
   {
     "date": "2026-03-27",
     "balance": 9569.0,
     "dollar_change": -11.0,
     "pct_change": -0.1148,
-    "cum_return": 8.9207
+    "cum_return": 6.6887
   },
   {
     "date": "2026-03-30",
     "balance": 9281.0,
     "dollar_change": -288.0,
     "pct_change": -3.0097,
-    "cum_return": 5.6425
+    "cum_return": 3.4777
   },
   {
     "date": "2026-03-31",
     "balance": 9800.0,
     "dollar_change": 519.0,
     "pct_change": 5.5921,
-    "cum_return": 11.5502
+    "cum_return": 9.2643
   },
   {
     "date": "2026-04-01",
     "balance": 10427.0,
-    "dollar_change": 627.0,
-    "pct_change": 6.398,
-    "cum_return": 18.6871
+    "dollar_change": 327.0,
+    "pct_change": 3.3367,
+    "cum_return": 12.9101
   },
   {
     "date": "2026-04-02",
     "balance": 10563.0,
     "dollar_change": 136.0,
     "pct_change": 1.3043,
-    "cum_return": 20.2352
+    "cum_return": 14.3828
   },
   {
     "date": "2026-04-06",
     "balance": 10558.0,
     "dollar_change": -5.0,
     "pct_change": -0.0473,
-    "cum_return": 20.1783
+    "cum_return": 14.3287
   },
   {
     "date": "2026-04-07",
     "balance": 10573.0,
     "dollar_change": 15.0,
     "pct_change": 0.1421,
-    "cum_return": 20.3491
+    "cum_return": 14.4911
   },
   {
     "date": "2026-04-08",
     "balance": 11112.0,
     "dollar_change": 539.0,
     "pct_change": 5.0979,
-    "cum_return": 26.4844
+    "cum_return": 20.3278
   },
   {
     "date": "2026-04-09",
     "balance": 11209.0,
     "dollar_change": 97.0,
     "pct_change": 0.8729,
-    "cum_return": 27.5884
+    "cum_return": 21.3781
   },
   {
     "date": "2026-04-10",
     "balance": 11360.0,
     "dollar_change": 151.0,
     "pct_change": 1.3471,
-    "cum_return": 29.3072
+    "cum_return": 23.0132
   },
   {
     "date": "2026-04-13",
     "balance": 11654.0,
     "dollar_change": 294.0,
     "pct_change": 2.588,
-    "cum_return": 32.6536
+    "cum_return": 26.1968
   },
   {
     "date": "2026-04-14",
     "balance": 11850.0,
     "dollar_change": 196.0,
     "pct_change": 1.6818,
-    "cum_return": 34.8846
+    "cum_return": 28.3192
   },
   {
     "date": "2026-04-15",
     "balance": 11904.0,
     "dollar_change": 54.0,
     "pct_change": 0.4557,
-    "cum_return": 35.4993
+    "cum_return": 28.9039
   },
   {
     "date": "2026-04-16",
     "balance": 11862.0,
     "dollar_change": -42.0,
     "pct_change": -0.3528,
-    "cum_return": 35.0212
+    "cum_return": 28.4491
   },
   {
     "date": "2026-04-17",
     "balance": 12081.0,
     "dollar_change": 219.0,
     "pct_change": 1.8462,
-    "cum_return": 37.514
+    "cum_return": 30.8206
   },
   {
     "date": "2026-04-20",
     "balance": 12102.0,
     "dollar_change": 21.0,
     "pct_change": 0.1738,
-    "cum_return": 37.753
+    "cum_return": 31.0479
   },
   {
     "date": "2026-04-21",
     "balance": 11865.0,
     "dollar_change": -237.0,
     "pct_change": -1.9584,
-    "cum_return": 35.0552
+    "cum_return": 28.4815
   },
   {
     "date": "2026-04-22",
     "balance": 12017.0,
     "dollar_change": 152.0,
     "pct_change": 1.2811,
-    "cum_return": 36.7854
+    "cum_return": 30.1275
   },
   {
     "date": "2026-04-23",
     "balance": 11878.0,
     "dollar_change": -139.0,
     "pct_change": -1.1567,
-    "cum_return": 35.2032
+    "cum_return": 28.6223
   },
   {
     "date": "2026-04-24",
     "balance": 12101.0,
     "dollar_change": 223.0,
     "pct_change": 1.8774,
-    "cum_return": 37.7416
+    "cum_return": 31.037
   },
   {
     "date": "2026-04-27",
     "balance": 12215.0,
     "dollar_change": 114.0,
     "pct_change": 0.9421,
-    "cum_return": 39.0392
+    "cum_return": 32.2715
   },
   {
     "date": "2026-04-28",
     "balance": 12119.0,
     "dollar_change": -96.0,
     "pct_change": -0.7859,
-    "cum_return": 37.9465
+    "cum_return": 31.232
   },
   {
     "date": "2026-04-29",
     "balance": 12159.0,
     "dollar_change": 40.0,
     "pct_change": 0.3301,
-    "cum_return": 38.4019
+    "cum_return": 31.6652
   },
   {
     "date": "2026-04-30",
     "balance": 12494.0,
     "dollar_change": 335.0,
     "pct_change": 2.7552,
-    "cum_return": 42.2151
+    "cum_return": 35.2929
   },
   {
     "date": "2026-05-01",
     "balance": 12630.0,
     "dollar_change": 136.0,
     "pct_change": 1.0885,
-    "cum_return": 43.7631
+    "cum_return": 36.7655
   },
   {
     "date": "2026-05-04",
     "balance": 12578.0,
     "dollar_change": -52.0,
     "pct_change": -0.4117,
-    "cum_return": 43.1713
+    "cum_return": 36.2025
   },
   {
     "date": "2026-05-05",
     "balance": 12817.0,
     "dollar_change": 239.0,
     "pct_change": 1.9001,
-    "cum_return": 45.8916
+    "cum_return": 38.7904
   },
   {
     "date": "2026-05-06",
     "balance": 13004.0,
     "dollar_change": 187.0,
     "pct_change": 1.459,
-    "cum_return": 48.0202
+    "cum_return": 40.8154
   },
   {
     "date": "2026-05-07",
     "balance": 12670.0,
     "dollar_change": -334.0,
     "pct_change": -2.5684,
-    "cum_return": 44.2185
+    "cum_return": 37.1987
   },
   {
     "date": "2026-05-08",
     "balance": 12780.0,
     "dollar_change": 110.0,
     "pct_change": 0.8682,
-    "cum_return": 45.4706
+    "cum_return": 38.3898
   },
   {
     "date": "2026-05-11",
     "balance": 12740.0,
     "dollar_change": -40.0,
     "pct_change": -0.313,
-    "cum_return": 45.0152
+    "cum_return": 37.9567
   },
   {
     "date": "2026-05-12",
     "balance": 12410.0,
     "dollar_change": -330.0,
     "pct_change": -2.5903,
-    "cum_return": 41.2589
+    "cum_return": 34.3832
   },
   {
     "date": "2026-05-13",
     "balance": 12274.0,
     "dollar_change": -136.0,
     "pct_change": -1.0959,
-    "cum_return": 39.7109
+    "cum_return": 32.9105
   },
   {
     "date": "2026-05-14",
     "balance": 12496.0,
     "dollar_change": 222.0,
     "pct_change": 1.8087,
-    "cum_return": 42.2378
+    "cum_return": 35.3144
   },
   {
     "date": "2026-05-15",
     "balance": 12335.0,
     "dollar_change": -161.0,
     "pct_change": -1.2884,
-    "cum_return": 40.4052
+    "cum_return": 33.571
   },
   {
     "date": "2026-05-18",
     "balance": 12568.0,
     "dollar_change": 233.0,
     "pct_change": 1.8889,
-    "cum_return": 43.0573
+    "cum_return": 36.0941
   },
   {
     "date": "2026-05-19",
     "balance": 12495.0,
     "dollar_change": -73.0,
     "pct_change": -0.5808,
-    "cum_return": 42.2264
+    "cum_return": 35.3036
   },
   {
     "date": "2026-05-20",
     "balance": 12852.0,
     "dollar_change": 357.0,
     "pct_change": 2.8571,
-    "cum_return": 46.29
+    "cum_return": 39.1694
   },
   {
     "date": "2026-05-21",
     "balance": 12954.0,
     "dollar_change": 102.0,
     "pct_change": 0.7937,
-    "cum_return": 47.4511
+    "cum_return": 40.274
   },
   {
     "date": "2026-05-22",
     "balance": 13605.0,
     "dollar_change": 651.0,
     "pct_change": 5.0255,
-    "cum_return": 54.8613
+    "cum_return": 47.3235
   },
   {
     "date": "2026-05-26",
     "balance": 13803.0,
     "dollar_change": 198.0,
     "pct_change": 1.4553,
-    "cum_return": 57.115
+    "cum_return": 49.4675
   },
   {
     "date": "2026-05-27",
     "balance": 14119.0,
     "dollar_change": 316.0,
     "pct_change": 2.2894,
-    "cum_return": 60.7119
+    "cum_return": 52.8894
   },
   {
     "date": "2026-05-28",
     "balance": 15025.0,
     "dollar_change": 906.0,
     "pct_change": 6.4169,
-    "cum_return": 71.0247
+    "cum_return": 62.7001
   },
   {
     "date": "2026-05-29",
     "balance": 16319.0,
     "dollar_change": 1294.0,
     "pct_change": 8.6123,
-    "cum_return": 85.7538
+    "cum_return": 76.7123
   },
   {
     "date": "2026-06-01",
     "balance": 17733.0,
     "dollar_change": 1414.0,
     "pct_change": 8.6647,
-    "cum_return": 101.8488
+    "cum_return": 92.0239
   },
   {
     "date": "2026-06-02",
     "balance": 17332.0,
     "dollar_change": -401.0,
     "pct_change": -2.2613,
-    "cum_return": 97.2844
+    "cum_return": 87.6817
   },
   {
     "date": "2026-06-03",
     "balance": 15980.0,
     "dollar_change": -1352.0,
     "pct_change": -7.8006,
-    "cum_return": 81.8951
+    "cum_return": 73.0414
   },
   {
     "date": "2026-06-04",
     "balance": 16102.0,
     "dollar_change": 122.0,
     "pct_change": 0.7635,
-    "cum_return": 83.2838
+    "cum_return": 74.3626
   },
   {
     "date": "2026-06-05",
     "balance": 14677.0,
     "dollar_change": -1425.0,
     "pct_change": -8.8498,
-    "cum_return": 67.0636
+    "cum_return": 58.9318
   },
   {
     "date": "2026-06-08",
     "balance": 15042.0,
     "dollar_change": 365.0,
     "pct_change": 2.4869,
-    "cum_return": 71.1193
+    "cum_return": 62.8843
   },
   {
     "date": "2026-06-09",
     "balance": 14223.0,
     "dollar_change": -819.0,
     "pct_change": -5.4448,
-    "cum_return": 61.7955
+    "cum_return": 54.0156
   },
   {
     "date": "2026-06-10",
     "balance": 13982.0,
     "dollar_change": -241.0,
     "pct_change": -1.6944,
-    "cum_return": 59.0561
+    "cum_return": 51.4059
   },
   {
     "date": "2026-06-11",
     "balance": 14216.0,
     "dollar_change": 234.0,
     "pct_change": 1.6736,
-    "cum_return": 61.7183
+    "cum_return": 53.9399
   }
 ]
