@@ -101,7 +101,7 @@
     <div class="hero-stat-bar">
       <div class="stat-item"><div class="stat-label">Current Balance</div><div class="stat-value" id="val-balance">—</div></div>
       <div class="stat-divider"></div>
-      <div class="stat-item"><div class="stat-label">Since Inception of Active Mgmt (9/18/25)</div><div class="stat-value" id="val-inception">—</div></div>
+      <div class="stat-item"><div class="stat-label">YTD</div><div class="stat-value" id="val-ytd">—</div></div>
       <div class="stat-divider"></div>
       <div class="stat-item"><div class="stat-label">1 Month</div><div class="stat-value" id="val-1m">—</div></div>
       <div class="stat-divider"></div>
@@ -133,7 +133,6 @@
     let homeChart;
     let homeMetric = 'balance';
     let homeRange = 'all';
-
     function getHomeSlice(range) {
       if (range === 'all') return homeData;
       if (range === 'ytd') { const s = homeData.filter(d => d.date >= '2026-01-01'); return s.length ? s : homeData; }
@@ -142,12 +141,10 @@
       if (range === '1w') return homeData.slice(-6);
       return homeData;
     }
-
     function buildHomeChart() {
       const slice = getHomeSlice(homeRange);
       const labels = slice.map(d => d.date);
       let dataset, label, titleText;
-
       if (homeMetric === 'balance') {
         dataset = slice.map(d => d.balance);
         label = 'Account Balance';
@@ -162,9 +159,7 @@
         label = 'Investment Gains';
         titleText = 'Investment Gains';
       }
-
       document.getElementById('home-chart-title').textContent = titleText;
-
       const ctx = document.getElementById('homeChart').getContext('2d');
       if (homeChart) homeChart.destroy();
       homeChart = new Chart(ctx, {
@@ -214,21 +209,18 @@
         }
       });
     }
-
     function setHomeMetric(metric, btn) {
       homeMetric = metric;
       document.querySelectorAll('#home-metric-toggle .chart-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       buildHomeChart();
     }
-
     function setHomeRange(range, btn) {
       homeRange = range;
       document.querySelectorAll('#home-range-toggle .chart-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       buildHomeChart();
     }
-
     Promise.all([
       fetch('data/performance.json').then(r => r.json()),
       fetch('data/contributions.json').then(r => r.json())
@@ -237,25 +229,26 @@
       homeData = data;
       homeContrib = contribData;
       const last = data[data.length - 1];
-
       const fmtPct = v => v >= 0
         ? `<span class="pos">+${v.toFixed(2)}%</span>`
         : `<span class="neg">${v.toFixed(2)}%</span>`;
-
       const sliceCumPct = (data, lookback) => {
         const end = data[data.length - 1];
         const start = data[Math.max(0, data.length - 1 - lookback)];
         return ((1 + end.cum_return / 100) / (1 + start.cum_return / 100) - 1) * 100;
       };
-
+      // YTD: find last entry before 2026-01-01 as the baseline
+      const ytdBaseline = [...data].reverse().find(d => d.date < '2026-01-01');
+      const ytdPct = ytdBaseline
+        ? ((1 + last.cum_return / 100) / (1 + ytdBaseline.cum_return / 100) - 1) * 100
+        : last.cum_return;
       document.getElementById('val-balance').innerHTML = `$${last.balance.toLocaleString('en-US', {minimumFractionDigits:2})}`;
-      document.getElementById('val-inception').innerHTML = fmtPct(last.cum_return);
+      document.getElementById('val-ytd').innerHTML = fmtPct(ytdPct);
       document.getElementById('val-1m').innerHTML = fmtPct(sliceCumPct(data, 21));
       document.getElementById('val-1w').innerHTML = fmtPct(sliceCumPct(data, 5));
       document.getElementById('val-1d').innerHTML = fmtPct(last.pct_change);
       const d = new Date(last.date + 'T12:00:00');
       document.getElementById('val-last-updated').textContent = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-
       buildHomeChart();
     }).catch(() => {});
   </script>
