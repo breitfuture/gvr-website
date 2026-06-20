@@ -54,6 +54,11 @@
       color: #e05c5c;
       border: 1px solid rgba(224,92,92,0.3);
     }
+    .trade-badge-open {
+      background: rgba(201,168,76,0.15);
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.3);
+    }
     .chevron {
       color: var(--gold);
       font-size: 1rem;
@@ -65,6 +70,16 @@
       padding-top: 1rem;
     }
     .week-group.open .week-content { display: block; }
+    .week-subsection-label {
+      font-size: .7rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 1.5rem 0 .75rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .week-subsection-label:first-child { margin-top: 0; }
     .trade-card {
       background: var(--navy-3);
       border: 1px solid var(--border);
@@ -100,6 +115,7 @@
       font-size: 1.4rem;
       font-weight: 600;
     }
+    .trade-result-value.new { color: var(--gold); }
     .trade-result-pct {
       font-size: .8rem;
       color: var(--muted);
@@ -171,8 +187,615 @@
     <p>A running journal of completed positions — entry thesis, exit rationale, and performance</p>
   </div>
   <div class="page-content">
+    <!-- WEEK: JUNE 15–18, 2026 -->
+    <div class="week-group open" id="week-2026-06-15">
+      <div class="week-header" onclick="toggleWeek('week-2026-06-15')">
+        <div class="week-header-left">
+          <div>
+            <div class="week-label">Week of June 15 – June 18, 2026</div>
+            <div class="week-meta">3 new positions · 9 closed trades</div>
+          </div>
+          <div class="week-summary-badges">
+            <span class="trade-badge trade-badge-open">FBIO Entry</span>
+            <span class="trade-badge trade-badge-open">AVAH Entry</span>
+            <span class="trade-badge trade-badge-open">SPCH Entry</span>
+            <span class="trade-badge trade-badge-win">IRWD +$5.50</span>
+            <span class="trade-badge trade-badge-win">SATS +$12.73</span>
+            <span class="trade-badge trade-badge-loss">IPSC -$20.00</span>
+            <span class="trade-badge trade-badge-loss">ENOV -$10.52</span>
+            <span class="trade-badge trade-badge-win">GOOG +$66.20</span>
+            <span class="trade-badge trade-badge-loss">DSX -$10.38</span>
+            <span class="trade-badge trade-badge-win">BWXT +$48.82</span>
+            <span class="trade-badge trade-badge-win">AXON +$82.86</span>
+            <span class="trade-badge trade-badge-win">MU +$665.62</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="week-content">
+        <div class="week-subsection-label">New Positions Opened</div>
+        <!-- FBIO -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">FBIO</div>
+              <div class="trade-name">Fortress Biotech Inc. Com New · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value new">New Position</div>
+              <div class="trade-result-pct">Opened Jun 15, 2026</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">Jun 15, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">150</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Price</div>
+              <div class="trade-stat-value">$2.80/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Amount</div>
+              <div class="trade-stat-value">$420.00</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Settlement Date</div>
+              <div class="trade-stat-value">Jun 16, 2026</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Entry Thesis</div>
+            <p>Fortress Biotech now sits on a notably clean balance sheet, with roughly $256 million in cash against just $39 million of debt. Recent proceeds from the sale of its Menkes disease drug program leave the company well positioned to cover the approximately $16 million owed on deferred FBIOP preferred dividends. Those dividends have been deferred for nearly two years and could total as much as $4.69 per share if paid by mid-June 2026, which would meaningfully benefit large insider holders. On a sum-of-the-parts basis, FBIO's cash alone appears to exceed its equity market cap plus debt, preferred stock at par, and the deferred dividend obligation combined by roughly $24 million — suggesting the market is mispricing the balance sheet. Shares are also still about 35% below their January 2026 highs, adding to the case for an attractive entry point.</p>
+          </div>
+        </div>
+        <!-- AVAH -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">AVAH</div>
+              <div class="trade-name">Aveanna Healthcare Holdings Inc. · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value new">New Position</div>
+              <div class="trade-result-pct">Opened Jun 15, 2026</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">Jun 15, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">40</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Price</div>
+              <div class="trade-stat-value">$7.16/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Amount</div>
+              <div class="trade-stat-value">$286.40</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Settlement Date</div>
+              <div class="trade-stat-value">Jun 16, 2026</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Entry Thesis</div>
+            <p>Aveanna Healthcare's Q1 2026 results beat both earnings and revenue expectations, with shares jumping 14% on the print — the ninth consecutive quarter of EPS beats and fourteenth straight quarter of revenue beats. There are real risks here, including elevated debt, negative free cash flow in the quarter, and some insider selling, but the valuation still looks reasonable with a forward P/E around 11.4 and a PEG ratio of 0.77. Improving profitability, continued expansion in home health and pediatric care, and raised full-year 2026 guidance support a bullish view. Shares are also still roughly 26% below their January 2026 highs.</p>
+          </div>
+        </div>
+        <!-- SPCH -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">SPCH</div>
+              <div class="trade-name">Themes ETF Tr Leverage Shs 2X · ETF</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value new">New Position</div>
+              <div class="trade-result-pct">Opened Jun 16, 2026</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">Jun 16, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">20</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Price</div>
+              <div class="trade-stat-value">$23.04/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Amount</div>
+              <div class="trade-stat-value">$460.80</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Settlement Date</div>
+              <div class="trade-stat-value">Jun 17, 2026</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Entry Thesis</div>
+            <p>SPCH was added purely as a way to get leveraged exposure to SpaceX, allowing the portfolio to participate in that growth story.</p>
+          </div>
+        </div>
+
+        <div class="week-subsection-label">Positions Closed</div>
+        <!-- IRWD -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">IRWD</div>
+              <div class="trade-name">Ironwood Pharmaceuticals Inc. · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value pos">+$5.50</div>
+              <div class="trade-result-pct">+3.1% · ~3.5 months</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">Feb 26, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Date</div>
+              <div class="trade-stat-value">Jun 16, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">50</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Avg Cost</div>
+              <div class="trade-stat-value">$3.60/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Price</div>
+              <div class="trade-stat-value">$3.71/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Cost Basis</div>
+              <div class="trade-stat-value">$179.75</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Proceeds</div>
+              <div class="trade-stat-value">$185.25</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Reason</div>
+              <div class="trade-stat-value">Cash Building / Framework Fit</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Exit Rationale</div>
+            <p>This lot of IRWD was closed for a modest gain of $5.50 (+3.1%). The exit was part of the broader push this week to build cash for new opportunities, and the position no longer fit the current GVR framework.</p>
+          </div>
+        </div>
+        <!-- SATS -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">SATS</div>
+              <div class="trade-name">EchoStar Corporation · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value pos">+$12.73</div>
+              <div class="trade-result-pct">+11.8% · ~3 months</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">Mar 9, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Date</div>
+              <div class="trade-stat-value">Jun 16, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">1</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Avg Cost</div>
+              <div class="trade-stat-value">$107.90/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Price</div>
+              <div class="trade-stat-value">$120.63/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Cost Basis</div>
+              <div class="trade-stat-value">$107.90</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Proceeds</div>
+              <div class="trade-stat-value">$120.63</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Reason</div>
+              <div class="trade-stat-value">Cash Building / Framework Fit</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Exit Rationale</div>
+            <p>SATS was closed for a gain of $12.73 (+11.8%) after roughly three months. Same rationale as the other names trimmed this week — raising cash for better opportunities, with the position no longer aligning with the GVR framework.</p>
+          </div>
+        </div>
+        <!-- IPSC -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">IPSC</div>
+              <div class="trade-name">Century Therapeutics Inc. · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value neg">-$20.00</div>
+              <div class="trade-result-pct">-8.2% · ~2 months</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">Apr 15 &amp; Apr 17, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Date</div>
+              <div class="trade-stat-value">Jun 16, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">100 total (2 lots of 50)</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Avg Cost</div>
+              <div class="trade-stat-value">$2.43/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Price</div>
+              <div class="trade-stat-value">$2.23/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Cost Basis</div>
+              <div class="trade-stat-value">$242.50</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Proceeds</div>
+              <div class="trade-stat-value">$222.50</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Reason</div>
+              <div class="trade-stat-value">Cash Building / Framework Fit</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Exit Rationale</div>
+            <p>The full 100-share IPSC position was closed for a loss of $20.00 (-8.2%) after roughly two months. The exit was driven by the same two factors as the rest of this week's closes: building cash for better opportunities, with the position no longer fitting the GVR framework.</p>
+          </div>
+        </div>
+        <!-- ENOV -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">ENOV</div>
+              <div class="trade-name">Enovis Corporation · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value neg">-$10.52</div>
+              <div class="trade-result-pct">-10.9% · ~7 weeks</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">Apr 27, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Date</div>
+              <div class="trade-stat-value">Jun 16, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">4</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Avg Cost</div>
+              <div class="trade-stat-value">$24.12/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Price</div>
+              <div class="trade-stat-value">$21.49/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Cost Basis</div>
+              <div class="trade-stat-value">$96.48</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Proceeds</div>
+              <div class="trade-stat-value">$85.96</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Reason</div>
+              <div class="trade-stat-value">Cash Building / Framework Fit</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Exit Rationale</div>
+            <p>This lot of ENOV was closed for a loss of $10.52 (-10.9%). As with the other exits this week, the move was about freeing up cash for new opportunities, with the position no longer aligning with the GVR framework.</p>
+          </div>
+        </div>
+        <!-- GOOG -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">GOOG</div>
+              <div class="trade-name">Alphabet Inc. Class C · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value pos">+$66.20</div>
+              <div class="trade-result-pct">+21.7% · ~4 months</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">Feb 20, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Date</div>
+              <div class="trade-stat-value">Jun 16, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">1</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Avg Cost</div>
+              <div class="trade-stat-value">$304.71/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Price</div>
+              <div class="trade-stat-value">$370.91/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Cost Basis</div>
+              <div class="trade-stat-value">$304.71</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Proceeds</div>
+              <div class="trade-stat-value">$370.91</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Reason</div>
+              <div class="trade-stat-value">Cash Building / Framework Fit</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Exit Rationale</div>
+            <p>GOOG was closed for a gain of $66.20 (+21.7%) after roughly four months. The exit follows the same logic applied across this week's closes — building cash for new opportunities, with the position no longer fitting the GVR framework.</p>
+          </div>
+        </div>
+        <!-- DSX -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">DSX</div>
+              <div class="trade-name">Diana Shipping Inc. · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value neg">-$10.38</div>
+              <div class="trade-result-pct">-4.3% · ~10 weeks</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">Mar 31 &amp; Apr 10, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Date</div>
+              <div class="trade-stat-value">Jun 16, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">100 total (75 + 25)</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Avg Cost</div>
+              <div class="trade-stat-value">$2.44/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Price</div>
+              <div class="trade-stat-value">$2.34/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Cost Basis</div>
+              <div class="trade-stat-value">$243.88</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Proceeds</div>
+              <div class="trade-stat-value">$233.50</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Reason</div>
+              <div class="trade-stat-value">Cash Building / Framework Fit</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Exit Rationale</div>
+            <p>This week's 100-share DSX closing sale, split across two lots, resulted in a loss of $10.38 (-4.3%). Consistent with the rest of this week's activity, the exit was about building cash for better opportunities, with the position no longer fitting the GVR framework.</p>
+          </div>
+        </div>
+        <!-- BWXT -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">BWXT</div>
+              <div class="trade-name">BWX Technologies Inc. · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value pos">+$48.82</div>
+              <div class="trade-result-pct">+8.7% · 9 days</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">Jun 8, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Date</div>
+              <div class="trade-stat-value">Jun 17, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">3</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Avg Cost</div>
+              <div class="trade-stat-value">$187.51/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Price</div>
+              <div class="trade-stat-value">$203.78/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Cost Basis</div>
+              <div class="trade-stat-value">$562.52</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Proceeds</div>
+              <div class="trade-stat-value">$611.34</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Reason</div>
+              <div class="trade-stat-value">Cash Building / Framework Fit</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Exit Rationale</div>
+            <p>BWXT was closed after a short nine-day hold for a gain of $48.82 (+8.7%). The exit reflects the two factors that applied across several positions trimmed this week: building cash for new and more attractive opportunities, and the position no longer screening well against the current GVR framework.</p>
+          </div>
+        </div>
+        <!-- AXON -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">AXON</div>
+              <div class="trade-name">Axon Enterprise Inc. · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value pos">+$82.86</div>
+              <div class="trade-result-pct">+10.5% · ~3 weeks</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">May 26, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Date</div>
+              <div class="trade-stat-value">Jun 17, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">2</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Avg Cost</div>
+              <div class="trade-stat-value">$395.27/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Price</div>
+              <div class="trade-stat-value">$436.70/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Cost Basis</div>
+              <div class="trade-stat-value">$790.54</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Proceeds</div>
+              <div class="trade-stat-value">$873.40</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Reason</div>
+              <div class="trade-stat-value">Cash Building / Framework Fit</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Exit Rationale</div>
+            <p>AXON was closed after roughly three weeks for a gain of $82.86 (+10.5%). As with several other names closed this week, the decision came down to freeing up cash for better-positioned opportunities, with the position no longer aligning with the GVR framework.</p>
+          </div>
+        </div>
+        <!-- MU -->
+        <div class="trade-card">
+          <div class="trade-card-header">
+            <div>
+              <div class="trade-ticker">MU</div>
+              <div class="trade-name">Micron Technology Inc. · Equity</div>
+            </div>
+            <div class="trade-result">
+              <div class="trade-result-value pos">+$665.62</div>
+              <div class="trade-result-pct">+174.6% · ~3.5 months</div>
+            </div>
+          </div>
+          <div class="trade-stats">
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Entry Date</div>
+              <div class="trade-stat-value">Mar 3, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Date</div>
+              <div class="trade-stat-value">Jun 17, 2026</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Shares</div>
+              <div class="trade-stat-value">1</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Avg Cost</div>
+              <div class="trade-stat-value">$381.34/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Price</div>
+              <div class="trade-stat-value">$1,046.96/share</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Cost Basis</div>
+              <div class="trade-stat-value">$381.34</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Proceeds</div>
+              <div class="trade-stat-value">$1,046.96</div>
+            </div>
+            <div class="trade-stat-item">
+              <div class="trade-stat-label">Exit Reason</div>
+              <div class="trade-stat-value">Take Profit</div>
+            </div>
+          </div>
+          <div class="trade-body">
+            <div class="trade-section-label">Exit Rationale</div>
+            <p>MU was originally framed as a memory-adjacent AI infrastructure play, riding the broader wave of demand for HBM and DRAM tied to AI data center buildout. After nearly tripling in value over roughly three and a half months, the stock had become significantly extended off that run. Rather than risk giving back those gains chasing further upside, the position was closed to lock in profits, with the plan to revisit the name on a pullback at a better entry point.</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- WEEK: JUNE 8–12, 2026 -->
-    <div class="week-group open" id="week-2026-06-08">
+    <div class="week-group" id="week-2026-06-08">
       <div class="week-header" onclick="toggleWeek('week-2026-06-08')">
         <div class="week-header-left">
           <div>
@@ -188,7 +811,6 @@
         <span class="chevron">▼</span>
       </div>
       <div class="week-content">
-
         <!-- SYM -->
         <div class="trade-card">
           <div class="trade-card-header">
@@ -242,7 +864,6 @@
             <p>That demand zone failed to hold — price broke decisively below the level the entry was built on, leaving the chart structurally broken. Combined with thin margins and inconsistent earnings at the fundamental level, this no longer screened as a name worth defending. Rather than hold a falling knife on the hope of a reversion, the position was cut and the capital redeployed to better setups.</p>
           </div>
         </div>
-
         <!-- SM -->
         <div class="trade-card">
           <div class="trade-card-header">
@@ -296,7 +917,6 @@
             <p>The exit was driven by a shift in the macro backdrop rather than any deterioration in the company itself. With reports of progress toward a deal with Iran, the geopolitical premium embedded in crude prices looked increasingly likely to fade, and oil appeared to be topping out in the near term. That removes one of the key growth engines underpinning the thesis. Rather than wait for that view to play out and risk giving back the gain, the position was closed for a modest profit — an example of being proactive about taking wins off the table when the original catalyst structure changes, even before the chart confirms it.</p>
           </div>
         </div>
-
         <!-- MPC -->
         <div class="trade-card">
           <div class="trade-card-header">
@@ -348,10 +968,8 @@
             <p>Essentially the same thesis and exit logic as SM, applied to a more established, lower-beta name within the refining/integrated space: a play on elevated oil prices following the escalation of the Iran conflict. With signs of a potential de-escalation emerging and the geopolitical premium in crude likely to compress, the catalyst behind the trade was fading. The position was closed for a solid gain, consistent with the broader approach of taking profits when the underlying narrative shifts rather than waiting for price action to confirm it.</p>
           </div>
         </div>
-
       </div>
     </div>
-
     <!-- WEEK: JUNE 1–5, 2026 -->
     <div class="week-group" id="week-2026-06-01">
       <div class="week-header" onclick="toggleWeek('week-2026-06-01')">
