@@ -1307,5 +1307,19 @@
     "dollar_change": -396,
     "pct_change": -2.65,
     "cum_return": 52.12
+  },
+  {
+    "date": "2026-06-17",
+    "balance": 14260.0,
+    "dollar_change": -289,
+    "pct_change": -1.99,
+    "cum_return": 49.09
+  },
+  {
+    "date": "2026-06-18",
+    "balance": 15338.0,
+    "dollar_change": 78,
+    "pct_change": 0.55,
+    "cum_return": 49.91
   }
 ]

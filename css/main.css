@@ -367,13 +367,22 @@ tbody tr:last-child td { border-bottom: none; }
 }
 /* ── RESPONSIVE ──────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .hero { padding: 100px 2rem 180px; }
+  .hero {
+    padding: 100px 2rem 2rem;
+    min-height: auto;
+    overflow: visible;
+    justify-content: flex-start;
+  }
   .about-strip { padding: 3rem 2rem; }
   .about-grid { grid-template-columns: 1fr; }
   .page-content { padding: 2rem; }
   .page-header { padding: 100px 2rem 2rem; }
   .perf-stats-grid { grid-template-columns: repeat(3, 1fr); }
-  .hero-stat-bar { flex-wrap: wrap; }
+  .hero-stat-bar {
+    position: static;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
   .stat-item { min-width: 40%; }
   .stat-divider { display: none; }
   .nav-links {

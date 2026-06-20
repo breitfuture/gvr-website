@@ -74,7 +74,7 @@
       <div class="hero-text">
         <div class="hero-eyebrow">Independent Research · Personal Portfolio · Since Sept 18, 2025</div>
         <h1 class="hero-title">Generating Alpha<br><em>Through Analysis</em></h1>
-        <p class="hero-sub">A transparent research journal documenting the build of a systematic stock scoring framework, portfolio decision-making, and continuous process refinement in pursuit of disciplined, risk-aware alpha.</p>
+        <p class="hero-sub">A research journal documenting portfolio decision-making, and continuous process refinement in pursuit of alpha.</p>
         <div class="hero-cta">
           <a href="performance.html" class="btn-primary">View Performance</a>
           <a href="newsletter.html" class="btn-ghost">Latest Research</a>
@@ -197,7 +197,21 @@
             }
           },
           scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8a94a8', font: { size: 11 }, maxTicksLimit: 6, maxRotation: 0 } },
+            x: {
+              grid: { color: 'rgba(255,255,255,0.04)' },
+              ticks: {
+                color: '#8a94a8',
+                font: { size: 11 },
+                maxRotation: 0,
+                autoSkip: true,
+                autoSkipPadding: 28,
+                callback: function(value) {
+                  const label = this.getLabelForValue(value);
+                  const d = new Date(label + 'T12:00:00');
+                  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                }
+              }
+            },
             y: {
               grid: { color: 'rgba(255,255,255,0.04)' },
               ticks: {
