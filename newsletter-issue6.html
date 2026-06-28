@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Issue #6 — Golden Valley Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .article-wrap { max-width: 740px; }
+    .article-date {
+      font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .article-title {
+      font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; line-height: 1.15; color: var(--white);
+      margin-bottom: 2rem; padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-body h2 {
+      font-family: var(--font-display); font-size: 1.4rem;
+      color: var(--gold); margin: 2rem 0 .75rem;
+    }
+    .article-body p {
+      color: var(--muted); font-size: .95rem; line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+    .article-body strong { color: var(--white); }
+    .perf-row {
+      display: flex; gap: 1rem; margin: 1.5rem 0; flex-wrap: wrap;
+    }
+    .perf-box {
+      flex: 1; min-width: 140px;
+      background: var(--navy-3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.25rem;
+    }
+    .perf-box-label {
+      font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: .4rem;
+    }
+    .perf-box-value {
+      font-family: var(--font-display); font-size: 1.6rem; font-weight: 600;
+    }
+    .perf-box-value.pos { color: #4caf7d; }
+    .perf-box-value.neg { color: #e05c5c; }
+    .back-link {
+      display: inline-block; margin-bottom: 2rem;
+      font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <svg class="nav-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 3 L54 15 L54 38 Q54 52 30 58 Q6 52 6 38 L6 15 Z" fill="#0d1117" stroke="#c9a84c" stroke-width="1.5"/>
+        <path d="M30 7 L50 17.5 L50 37 Q50 49 30 54 Q10 49 10 37 L10 17.5 Z" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+        <text x="30" y="32" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#c9a84c" text-anchor="middle">GV9</text>
+        <polyline points="16,40 22,33 27,37 34,27 40,30 46,22" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+      </svg>
+      <span class="nav-name">Golden Valley Research</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="performance.html">Performance</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="thesis.html">Thesis</a></li>
+      <li><a href="newsletter.html" class="active">Newsletter</a></li>
+      <li><a href="closed-trades.html">Closed Trades</a></li>
+      <li><a href="disclosures.html" class="nav-disclosures">Disclosures</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+  </nav>
+  <div class="page-header">
+    <h1>Newsletter</h1>
+    <p>Issue #6 — June 26, 2026</p>
+  </div>
+  <div class="page-content">
+    <div class="article-wrap">
+      <a href="newsletter.html" class="back-link">← Back to newsletter</a>
+      <div class="article-date">June 26, 2026 — Issue #6</div>
+      <div class="article-title">Tech Cracks, Iran Deal Wobbles, and the NOW Call Reminds Everyone Why Options Exist</div>
+      <div class="article-body">
+
+        <h2>Weekly Performance</h2>
+        <p>The GVR portfolio declined <strong>-4.71%</strong> this week, roughly in line with a broad technology-led selloff that dragged the Nasdaq down <strong>-4.60%</strong> and the S&P 500 lower by <strong>-2.59%</strong>. For most of the week the equity book was tracking the market fairly closely — a collection of positions moving in roughly the direction you'd expect given the macro backdrop. What changed that picture dramatically was Friday, when ServiceNow surged more than <strong>10%</strong> in a single session, sending the NOW October 2026 $100 call up <strong>$478, or +54.94%</strong>, in one day. That one afternoon is a useful illustration of what long options actually do: they sit quietly while the world sells off around them, and then they explode when the underlying finally catches a bid.</p>
+        <div class="perf-row">
+          <div class="perf-box">
+            <div class="perf-box-label">GVR Portfolio</div>
+            <div class="perf-box-value neg">-4.71%</div>
+          </div>
+          <div class="perf-box">
+            <div class="perf-box-label">QQQ (Nasdaq)</div>
+            <div class="perf-box-value neg">-4.60%</div>
+          </div>
+          <div class="perf-box">
+            <div class="perf-box-label">VOO (S&P 500)</div>
+            <div class="perf-box-value neg">-2.59%</div>
+          </div>
+        </div>
+        <p>On a year-to-date basis, GVR sits at <strong>+33.84%</strong>, versus <strong>+15.28%</strong> for QQQ and <strong>+7.53%</strong> for VOO. A rough week, but the YTD lead remains substantial — and Friday's NOW move is a reminder that the options book can recover ground quickly when conditions cooperate.</p>
+
+        <h2>The NOW Call: A One-Day Lesson in Options Leverage</h2>
+        <p>The ServiceNow October 2026 $100 call has been a source of pain for most of the past several weeks, sitting underwater as the software sector struggled and macro headwinds kept a lid on growth multiples. That changed on Friday. ServiceNow shares jumped more than <strong>10%</strong> in a single session — the precise kind of sharp, catalyst-driven move that a long call is designed to capture. The position responded accordingly: the contract gained <strong>$478 in a single day, a move of +54.94%</strong>. To put that in context, a 10% move in the underlying stock produced a roughly 55% move in the option. That is delta and gamma doing exactly what they are supposed to do.</p>
+        <p>This is worth documenting honestly because the prior few weeks told the other side of the same story. Options decay over time when the underlying sits still, and they amplify losses when the underlying moves against you. Holding through that period of drawdown required conviction that the thesis — ServiceNow's position in enterprise AI workflow automation, contracted recurring revenue, and a long enough expiration runway — was intact even when the daily PnL said otherwise. Friday validated the patience, at least for one session. The position is not yet back to its peak value, and the thesis has not changed. The October expiration still provides meaningful runway, and the setup heading into the second half of the year — where enterprise software spending decisions tend to accelerate — remains intact.</p>
+        <p>The broader lesson is one worth internalizing: options positions can spend extended periods appearing to do nothing useful, and then compress weeks of potential movement into a single afternoon. Managing that emotionally — not exiting at the bottom, not over-allocating to chase the move — is most of the job.</p>
+
+        <h2>Equity Book: Holding Steady Through the Chop</h2>
+        <p>The equity side of the portfolio largely tracked the market this week without any single name causing dramatic outperformance or underperformance. The portfolio's new additions from recent weeks — positions like PGY, SOFI, LITE, and SGML — traded in line with their respective sectors as growth and technology names came under broad pressure. The cash reserve that was built up over the prior several weeks provided a natural buffer, limiting the overall portfolio decline relative to a fully invested position. No new positions were opened or closed this week. The approach continues to be patient deployment of capital into setups that genuinely clear the checklist, rather than trading for the sake of staying active.</p>
+        <p>A few names worth noting from the current book: LITE (Lumentum) remains the largest single equity position at over 11% of the account — a concentration that warrants monitoring as the name navigates the current tech volatility. PGY (Pagaya) and SOFI held up relatively well on a relative basis this week, each posting modest gains on Friday as the market's breadth improved despite mega-cap tech weakness. CRDO (Credo Technology), which has been one of the stronger performers in the book since initiation, added to gains again on the week and is now showing a total return of nearly <strong>+97%</strong> from cost.</p>
+
+        <h2>What Happened in Markets This Week</h2>
+        <p>The week's defining dynamic was a sharp and broad rotation out of technology stocks, led by the semiconductor space, against a backdrop of renewed geopolitical uncertainty and mounting concerns about AI infrastructure spending sustainability. The trouble began Monday when South Korea's KOSPI index — heavily weighted toward chipmakers like Samsung and SK Hynix — triggered circuit breakers and fell nearly double digits in a single session, setting the tone for a global tech selloff that carried into U.S. markets on Tuesday. The SMH semiconductor ETF dropped roughly <strong>7%</strong> on the day, with names like Micron, Nvidia, and Taiwan Semiconductor all falling sharply. The Nasdaq lost <strong>2.21%</strong> on Tuesday alone as the contagion spread.</p>
+        <p>The catalyst behind the semiconductor sell-off was a Bank of America research note that flagged the possibility of up to three Federal Reserve rate hikes remaining in 2026 — a more aggressive path than markets had priced — alongside broader concerns that AI infrastructure spending may be running ahead of monetization timelines. Those concerns were amplified later in the week by a <em>New York Times</em> report that OpenAI is considering delaying its highly anticipated IPO to 2027, citing poor post-IPO performance from SpaceX and overall volatility in AI-related shares. For a market that has been pricing in an accelerating AI buildout as a key driver of semiconductor and software demand, the prospect of slowing capital formation in the space was enough to shake confidence meaningfully.</p>
+        <p>The Iran situation also deteriorated on Friday in a way that caught some investors off guard. President Trump took to Truth Social to announce that Iran had committed a "foolish violation" of the June ceasefire agreement by launching attack drones at commercial ships transiting the Strait of Hormuz. The accusation came just days after Iran had itself accused the U.S. of violating the agreement over continued Israeli strikes in southern Lebanon — a pattern of mutual blame that threatens to unravel the 60-day negotiating window that markets had priced as a meaningful de-escalation. Oil markets reacted with a roughly 3-4% decline in WTI and Brent crude on the day, which on the surface seems counterintuitive — but reflects the market's read that diplomatic escalation in words is different from a physical resumption of hostilities, and that tanker traffic through the Strait remains largely unimpeded for now. The more durable risk is that the ceasefire negotiations, which were supposed to address Iran's nuclear program and sanctions relief, are losing momentum before any of the hard issues get resolved.</p>
+        <p>There were some bright spots. The week's breadth was notably better than the headline numbers suggest: on multiple sessions where the S&P 500 and Nasdaq posted losses driven by a narrow band of mega-cap technology names, the majority of S&P 500 constituents actually closed in positive territory. Health care in particular had a strong week, with sector names like Moderna, Incyte, and several biotech names posting significant gains as investors rotated into areas less exposed to AI infrastructure spending concerns and rate hike risk. Micron Technology reported earnings after Wednesday's close that beat expectations, though shares sold off following the print — a classic "buy the rumor, sell the news" dynamic in a sector that had already priced in strong results after a parabolic run in 2026.</p>
+        <p>The week ended with the S&P 500 closing at <strong>7,354.02</strong>, down roughly 2% for the period. The Dow Jones Industrial Average was the outlier, rising about 0.6% on the week as money rotated into more defensive and value-oriented names. The VIX closed at 18.41, elevated but not panicked — a market that is nervous but not broken. Next week brings a shortened trading schedule ahead of the July 4th holiday and a nonfarm payroll report that could meaningfully shift the rate narrative one way or another.</p>
+
+      </div>
+    </div>
+  </div>
+  <div class="disclosure-banner">
+    <strong>Disclosure:</strong> This newsletter is for informational purposes only. Not investment advice. The author holds positions in NOW calls, ONDS calls, and various equity positions. Portfolio inception date September 18, 2025. <a href="disclosures.html">Full disclosures →</a>
+  </div>
+  <footer class="footer">
+    <span>© 2026 Golden Valley Research</span>
+    <a href="disclosures.html">Disclosures</a>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
